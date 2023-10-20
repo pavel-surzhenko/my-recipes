@@ -6,9 +6,18 @@
 @layer base {
     html {
         font-family: 'Montserrat Alternates', sans-serif;
-        background-color: #f9f5e7;
+        min-height: 100vh;
+    }
+    body {
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
     }
 }
+
+#root {
+    @apply flex flex-col flex-1;
+}
 .active {
-    @apply text-secondary;
+    @apply text-background dark:text-backgroundDark;
 }

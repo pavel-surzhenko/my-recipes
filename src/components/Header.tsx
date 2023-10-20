@@ -1,10 +1,12 @@
 import { NavLink } from 'react-router-dom';
 import Container from './Container';
-import { CloseIcon, MenuIcon } from '../assets';
-import { useState } from 'react';
+import { CloseIcon, MenuIcon, MoonIcon, SunIcon } from '../assets';
+import { useContext, useState } from 'react';
+import { ThemeContext } from '../lib/context';
 
 const Header = () => {
     const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
+    const { isThemeDark, handleThemeChange } = useContext(ThemeContext);
 
     if (isMenuOpen) {
         document.body.style.overflow = 'hidden';
@@ -13,7 +15,7 @@ const Header = () => {
     }
 
     return (
-        <section className='bg-primary py-5 text-lg text-white'>
+        <header className='bg-primary py-5 text-lg text-white dark:bg-primaryDark'>
             <Container>
                 <div className='flex items-center justify-between'>
                     <div>
@@ -28,6 +30,12 @@ const Header = () => {
                         <NavLink to={'/main'}>Другі страви</NavLink>
                         <NavLink to={'/salads'}>Салати</NavLink>
                         <NavLink to={'/desserts'}>Десерти</NavLink>
+                        <div
+                            onClick={handleThemeChange}
+                            className='flex items-center cursor-pointer'
+                        >
+                            {isThemeDark ? <SunIcon /> : <MoonIcon />}
+                        </div>
                     </nav>
                     <div className='block md:hidden'>
                         <div onClick={() => setIsMenuOpen(!isMenuOpen)}>
@@ -47,7 +55,7 @@ const Header = () => {
                     </div>
                 )}
             </Container>
-        </section>
+        </header>
     );
 };
 

@@ -4,6 +4,7 @@ import './index.css';
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 import Home from './pages/Home';
 import Root from './pages/Root';
+import { ContextProvider } from './lib/context';
 
 export const router = createBrowserRouter([
     {
@@ -15,6 +16,8 @@ export const router = createBrowserRouter([
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
     <React.StrictMode>
-        <RouterProvider router={router} />
+        <ContextProvider>
+            <RouterProvider router={router} />
+        </ContextProvider>
     </React.StrictMode>
 );
