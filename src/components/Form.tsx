@@ -1,8 +1,12 @@
 import axios from 'axios';
 import { useState } from 'react';
 import { AddIcon, DeleteIcon } from '../assets';
+import { toast } from 'react-toastify';
+import { toastOptions } from '../lib/toastOptions';
+import { useNavigate } from 'react-router-dom';
 
 const Form = () => {
+    const navigate = useNavigate();
     const [instructionSteps, setInstructionSteps] = useState<string[]>(['']);
 
     const addStep = () => {
@@ -31,11 +35,21 @@ const Form = () => {
         const name = formData.get('name');
 
         if (category && name && instructionSteps.length > 0) {
-            await axios.post('http://localhost:4000/food', {
-                category,
-                name,
-                instruction: instructionSteps,
-            });
+            await axios
+                .post('http://localhost:4000/food1', {
+                    category,
+                    name,
+                    instruction: instructionSteps,
+                })
+                .then((res) => {
+                    if (res.status === 200) {
+                        toast.success('Рецепт доданий', toastOptions);
+                        navigate('/');
+                    }
+                })
+                .catch((err) => {
+                    toast.error(`Упс, сталась помилка: ${err.message}`);
+                });
         }
     };
 

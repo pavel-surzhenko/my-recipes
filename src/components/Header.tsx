@@ -1,6 +1,6 @@
 import { NavLink } from 'react-router-dom';
 import Container from './Container';
-import { CloseIcon, MenuIcon, MoonIcon, SunIcon } from '../assets';
+import { CloseIcon, MenuIcon, MoonIcon, SearchIcon, SunIcon } from '../assets';
 import { useContext, useState } from 'react';
 import { ThemeContext } from '../lib/context';
 
@@ -18,26 +18,33 @@ const Header = () => {
         <header className='bg-primary py-5 text-lg text-white dark:bg-primaryDark'>
             <Container>
                 <div className='flex items-center justify-between'>
-                    <div>
-                        <img
-                            src=''
-                            alt=''
-                        />
-                    </div>
                     <nav className='hidden md:flex space-x-3 font-semibold'>
                         <NavLink to={'/'}>Головна</NavLink>
                         <NavLink to={'/soups'}>Супи</NavLink>
                         <NavLink to={'/main'}>Другі страви</NavLink>
                         <NavLink to={'/salads'}>Салати</NavLink>
                         <NavLink to={'/desserts'}>Десерти</NavLink>
+                    </nav>
+                    <div className='order-2 flex space-x-5'>
+                        <form className='relative'>
+                            <input
+                                type='text'
+                                placeholder='Пошук...'
+                                className=' input text-black dark:text-white'
+                            />
+                            <button className='absolute h-full  w-1/6 top-0 right-0 flex justify-center items-center'>
+                                <SearchIcon />
+                            </button>
+                        </form>
                         <div
                             onClick={handleThemeChange}
                             className='flex items-center cursor-pointer'
                         >
                             {isThemeDark ? <SunIcon /> : <MoonIcon />}
                         </div>
-                    </nav>
-                    <div className='block md:hidden'>
+                    </div>
+
+                    <div className='block md:hidden order-1'>
                         <div onClick={() => setIsMenuOpen(!isMenuOpen)}>
                             {isMenuOpen ? <CloseIcon /> : <MenuIcon />}
                         </div>
@@ -45,7 +52,7 @@ const Header = () => {
                 </div>
                 {isMenuOpen && (
                     <div className='bg-primary h-screen w-screen'>
-                        <nav className='flex flex-col space-y-3 font-semibold ml-5 text-2xl'>
+                        <nav className='flex flex-col space-y-3 font-semibold ml-5 text-2xl mt-5'>
                             <NavLink to={'/'}>Головна</NavLink>
                             <NavLink to={'/soups'}>Супи</NavLink>
                             <NavLink to={'/main'}>Другі страви</NavLink>
