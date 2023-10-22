@@ -1,13 +1,16 @@
-import React from 'react';
+/* eslint-disable react-refresh/only-export-components */
+import React, { Suspense } from 'react';
 import ReactDOM from 'react-dom/client';
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
-import Home from './pages/Home';
+
 import Root from './pages/Root';
 import { ContextProvider } from './lib/context';
-import NewRecipe from './pages/NewRecipe';
 
 import './index.css';
 import 'react-toastify/dist/ReactToastify.css';
+
+const Home = React.lazy(() => import('./pages/Home'));
+const NewRecipe = React.lazy(() => import('./pages/NewRecipe'));
 
 export const router = createBrowserRouter([
     {
@@ -23,7 +26,9 @@ export const router = createBrowserRouter([
 ReactDOM.createRoot(document.getElementById('root')!).render(
     <React.StrictMode>
         <ContextProvider>
-            <RouterProvider router={router} />
+            <Suspense>
+                <RouterProvider router={router} />
+            </Suspense>
         </ContextProvider>
     </React.StrictMode>
 );

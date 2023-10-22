@@ -36,7 +36,7 @@ const Form = () => {
 
         if (category && name && instructionSteps.length > 0) {
             await axios
-                .post('http://localhost:4000/food1', {
+                .post('http://localhost:4000/food', {
                     category,
                     name,
                     instruction: instructionSteps,

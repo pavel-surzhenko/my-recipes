@@ -1,11 +1,15 @@
 import axios from 'axios';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, Suspense } from 'react';
 import { AddIcon } from '../assets';
 import Container from '../components/Container';
 import { useNavigate } from 'react-router-dom';
+import React from 'react';
+import { FoodCardProps } from '../types';
+
+const FoodCard = React.lazy(() => import('../components/FoodCard'));
 
 const Home = () => {
-    const [data, setData] = useState([]);
+    const [data, setData] = useState<FoodCardProps[]>();
     const navigate = useNavigate();
 
     const fetch = async () =>
@@ -24,6 +28,17 @@ const Home = () => {
                     >
                         <span>Додати новий рецепт</span> <AddIcon />
                     </button>
+                </div>
+                <div className='grid grid-cols-1 md:grid-cols-3 gap-5 my-5'>
+                    <Suspense>
+                        {data &&
+                            data.map((food) => (
+                                <FoodCard
+                                    key={food._id}
+                                    {...food}
+                                />
+                            ))}
+                    </Suspense>
                 </div>
             </Container>
         </section>
