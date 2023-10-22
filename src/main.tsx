@@ -10,7 +10,9 @@ import './index.css';
 import 'react-toastify/dist/ReactToastify.css';
 
 const Home = React.lazy(() => import('./pages/Home'));
+const Soups = React.lazy(() => import('./pages/Soups'));
 const NewRecipe = React.lazy(() => import('./pages/NewRecipe'));
+const Main = React.lazy(() => import('./pages/Main'));
 
 export const router = createBrowserRouter([
     {
@@ -19,6 +21,8 @@ export const router = createBrowserRouter([
         children: [
             { path: '/', element: <Home /> },
             { path: '/new-recipe', element: <NewRecipe /> },
+            { path: '/soups', element: <Soups /> },
+            { path: '/main', element: <Main /> },
         ],
     },
 ]);
