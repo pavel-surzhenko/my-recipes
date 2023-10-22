@@ -13,6 +13,8 @@ const Home = React.lazy(() => import('./pages/Home'));
 const Soups = React.lazy(() => import('./pages/Soups'));
 const NewRecipe = React.lazy(() => import('./pages/NewRecipe'));
 const Main = React.lazy(() => import('./pages/Main'));
+const Salads = React.lazy(() => import('./pages/Salads'));
+const Desserts = React.lazy(() => import('./pages/Desserts'));
 
 export const router = createBrowserRouter([
     {
@@ -23,6 +25,8 @@ export const router = createBrowserRouter([
             { path: '/new-recipe', element: <NewRecipe /> },
             { path: '/soups', element: <Soups /> },
             { path: '/main', element: <Main /> },
+            { path: '/salads', element: <Salads /> },
+            { path: '/desserts', element: <Desserts /> },
         ],
     },
 ]);
