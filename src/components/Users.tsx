@@ -21,8 +21,6 @@ const Users = () => {
         fetch();
     }, []);
 
-    console.log(data);
-
     return (
         <>
             {data?.map((name) => (

@@ -21,3 +21,19 @@
 .active {
     @apply text-background dark:text-backgroundDark;
 }
+
+.input {
+    @apply px-3 py-2 rounded-md bg-third dark:bg-thirdDark  focus:ring-primary dark:focus:ring-primaryDark border-2 border-primary/50 dark:border-primaryDark/50 focus:border-primary dark:focus:border-primaryDark  outline-none;
+}
+.btn {
+    @apply px-3 py-2 bg-primary dark:bg-primaryDark rounded-md font-medium text-white;
+}
+.btn-del {
+    @apply px-3 py-2 bg-red rounded-md font-medium text-white;
+}
+.btn-suc {
+    @apply px-3 py-2 bg-green rounded-md font-medium text-white;
+}
+label {
+    @apply text-lg font-medium;
+}
