@@ -2,7 +2,11 @@
 export default {
     content: ['./index.html', './src/**/*.{ts,tsx}'],
     theme: {
-        extend: {},
+        extend: {
+            gridTemplateColumns: {
+                1: 'repeat(1, minmax(350px, 80%))',
+            },
+        },
         colors: {
             primary: '#A7727D',
             secondary: '#EDDBC7',
@@ -16,6 +20,10 @@ export default {
             black: '#000000',
             red: '#B33636',
             green: '#36B375',
+            categorySoups: '#D6D46D',
+            categoryMain: '#F9B572',
+            categorySalads: '#A8DF8E',
+            categoryDesserts: '#9ED2BE',
         },
     },
     plugins: [],

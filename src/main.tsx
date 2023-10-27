@@ -8,6 +8,7 @@ import { ContextProvider } from './lib/context';
 
 import './index.css';
 import 'react-toastify/dist/ReactToastify.css';
+import 'react-loading-skeleton/dist/skeleton.css';
 
 const Home = React.lazy(() => import('./pages/Home'));
 const Soups = React.lazy(() => import('./pages/Soups'));

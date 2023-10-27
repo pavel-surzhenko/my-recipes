@@ -19,7 +19,7 @@
     @apply flex flex-col flex-1;
 }
 .active {
-    @apply text-secondary dark:text-secondaryDark;
+    @apply underline underline-offset-8;
 }
 .input {
     @apply px-3 py-2 rounded-md bg-third dark:bg-thirdDark  focus:ring-primary dark:focus:ring-primaryDark border-2 border-primary/50 dark:border-primaryDark/50 focus:border-primary dark:focus:border-primaryDark  outline-none;
@@ -38,4 +38,16 @@ label {
 }
 .page {
     @apply bg-background dark:bg-backgroundDark dark:text-white flex-1;
+}
+.soups {
+    @apply bg-categorySoups;
+}
+.main {
+    @apply bg-categoryMain;
+}
+.salads {
+    @apply bg-categorySalads;
+}
+.desserts {
+    @apply bg-categoryDesserts;
 }

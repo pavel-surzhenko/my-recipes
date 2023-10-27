@@ -18,7 +18,7 @@ const Header = () => {
         <header className='bg-primary py-5 text-lg text-white dark:bg-primaryDark'>
             <Container>
                 <div className='flex items-center justify-between'>
-                    <nav className='hidden md:flex space-x-3 font-semibold'>
+                    <nav className='hidden md:flex md:text-base lg:text-xl space-x-3 font-semibold'>
                         <NavLink to={'/'}>Головна</NavLink>
                         <NavLink to={'/soups'}>Супи</NavLink>
                         <NavLink to={'/main'}>Другі страви</NavLink>

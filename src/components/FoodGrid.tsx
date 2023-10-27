@@ -5,7 +5,7 @@ const FoodCard = React.lazy(() => import('../components/FoodCard'));
 
 const FoodGrid: React.FC<{ data: FoodCardProps[] }> = ({ data }) => {
     return (
-        <div className='grid grid-cols-1 md:grid-cols-4 gap-5 my-5'>
+        <div className='grid grid-cols-1 justify-center md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5 my-5'>
             <Suspense>
                 {data &&
                     data?.map((food) => (
