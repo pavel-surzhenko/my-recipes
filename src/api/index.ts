@@ -3,23 +3,25 @@ import { FoodCardProps } from '../types';
 import { fetchData } from '../hooks/useFetch';
 
 export const api = {
-    async getAllFood(): Promise<FoodCardProps[]> {
-        return fetchData(`${BASE_URL}food`);
-    },
+    get: {
+        async allFood(): Promise<FoodCardProps[]> {
+            return fetchData(`${BASE_URL}food`);
+        },
 
-    async getMain(): Promise<FoodCardProps[]> {
-        return fetchData(`${BASE_URL}food/main`);
-    },
+        async main(): Promise<FoodCardProps[]> {
+            return fetchData(`${BASE_URL}food/main`);
+        },
 
-    async getSoups(): Promise<FoodCardProps[]> {
-        return fetchData(`${BASE_URL}food/soups`);
-    },
+        async soups(): Promise<FoodCardProps[]> {
+            return fetchData(`${BASE_URL}food/soups`);
+        },
 
-    async getSalads(): Promise<FoodCardProps[]> {
-        return fetchData(`${BASE_URL}food/salads`);
-    },
+        async salads(): Promise<FoodCardProps[]> {
+            return fetchData(`${BASE_URL}food/salads`);
+        },
 
-    async getDesserts(): Promise<FoodCardProps[]> {
-        return fetchData(`${BASE_URL}food/desserts`);
+        async desserts(): Promise<FoodCardProps[]> {
+            return fetchData(`${BASE_URL}food/desserts`);
+        },
     },
 };

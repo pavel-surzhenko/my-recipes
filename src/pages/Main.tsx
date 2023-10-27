@@ -10,7 +10,8 @@ const Main = () => {
     const [data, setData] = useState<FoodCardProps[]>();
 
     useEffect(() => {
-        api.getMain()
+        api.get
+            .main()
             .then((res) => setData(res))
             .catch((err) => toast.error(`Упс, сталась помилка: ${err.message}`));
     }, []);
