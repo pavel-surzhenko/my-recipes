@@ -1,18 +1,18 @@
-import axios from 'axios';
 import { useState, useEffect } from 'react';
 import Container from '../components/Container';
 import { FoodCardProps } from '../types';
 import FoodGrid from '../components/FoodGrid';
 import NewRecipeBtn from '../components/NewRecipeBtn';
+import { api } from '../api';
+import { toast } from 'react-toastify';
 
 const Home = () => {
     const [data, setData] = useState<FoodCardProps[]>();
 
-    const fetch = async () =>
-        await axios.get('http://localhost:4000/food').then((res) => setData(res.data));
-
     useEffect(() => {
-        fetch();
+        api.getAllFood()
+            .then((res) => setData(res))
+            .catch((err) => toast.error(`Упс, сталась помилка: ${err.message}`));
     }, []);
     return (
         <section className='page'>
