@@ -20,7 +20,9 @@ const FoodCard: React.FC<FoodCardProps> = ({ name, category, img, _id }) => {
                 to={`/${category} `}
                 className='self-end'
             >
-                <div className={`px-2 py-1 rounded-md font-semibold text-sm ${category}`}>
+                <div
+                    className={`px-2 py-1 rounded-md font-semibold text-sm dark:text-black ${category}`}
+                >
                     {categoryUA[category]}
                 </div>
             </Link>
