@@ -9,4 +9,4 @@ export type FoodCardProps = {
     _v: number;
 };
 
-type foodCategory = 'soups' | 'main' | 'salads' | 'desserts';
+export type foodCategory = 'soups' | 'main' | 'salads' | 'desserts';

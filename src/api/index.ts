@@ -9,19 +9,19 @@ export const api = {
         },
 
         async main(): Promise<FoodCardProps[]> {
-            return fetchData<FoodCardProps[]>(`${BASE_URL}food/main`);
+            return fetchData<FoodCardProps[]>(`${BASE_URL}main`);
         },
 
         async soups(): Promise<FoodCardProps[]> {
-            return fetchData<FoodCardProps[]>(`${BASE_URL}food/soups`);
+            return fetchData<FoodCardProps[]>(`${BASE_URL}soups`);
         },
 
         async salads(): Promise<FoodCardProps[]> {
-            return fetchData<FoodCardProps[]>(`${BASE_URL}food/salads`);
+            return fetchData<FoodCardProps[]>(`${BASE_URL}salads`);
         },
 
         async desserts(): Promise<FoodCardProps[]> {
-            return fetchData<FoodCardProps[]>(`${BASE_URL}food/desserts`);
+            return fetchData<FoodCardProps[]>(`${BASE_URL}desserts`);
         },
 
         async byId(id: string): Promise<FoodCardProps> {

@@ -29,3 +29,7 @@ If you are developing a production application, we recommend updating the config
 to do
 перевірити чи працює реакт лейзі
 sort backend
+get random dishesh from server
+add photo ro mongo
+add cock time
+add ingridients
