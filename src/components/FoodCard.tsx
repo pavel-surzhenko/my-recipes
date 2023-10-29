@@ -4,7 +4,7 @@ import { FoodCardProps } from '../types';
 import CategoryLabel from './CategoryLabel';
 import TimeIcon from '../assets/TimeIcon';
 
-const FoodCard: React.FC<FoodCardProps> = ({ name, category, images, _id }) => {
+const FoodCard: React.FC<FoodCardProps> = ({ name, category, images, _id, time }) => {
     return (
         <div className='bg-secondary dark:bg-secondaryDark rounded-md space-y-3 flex flex-col min-w-[250px] shadow-card'>
             <Link to={`/${category}/${_id}`}>
@@ -21,8 +21,9 @@ const FoodCard: React.FC<FoodCardProps> = ({ name, category, images, _id }) => {
                 </div>
             </Link>
             <div className='flex justify-between items-center pt-2 px-5'>
-                <div>
+                <div className='flex space-x-2'>
                     <TimeIcon />
+                    <p className='font-semibold'>{time} хв</p>
                 </div>
                 <Link to={`/${category} `}>
                     <CategoryLabel category={category} />

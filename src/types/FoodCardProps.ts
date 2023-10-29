@@ -1,9 +1,13 @@
+import { IngredientsProps } from '.';
+
 export type FoodCardProps = {
     _id: string;
     images?: string[];
     name: string;
     category: foodCategory;
     instruction: string[];
+    time: string;
+    ingredients: IngredientsProps[];
     createdAt: Date;
     updatedAt: Date;
     _v: number;

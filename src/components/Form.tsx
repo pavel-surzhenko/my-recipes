@@ -4,7 +4,7 @@ import { toast } from 'react-toastify';
 import { toastOptions } from '../lib/toastOptions';
 import { useNavigate } from 'react-router-dom';
 import { api } from '../api';
-import { foodCategory } from '../types';
+import { IngredientsProps, foodCategory } from '../types';
 import Skeleton from 'react-loading-skeleton';
 
 const Form = () => {
@@ -12,6 +12,7 @@ const Form = () => {
     const [instructionSteps, setInstructionSteps] = useState<string[]>(['']);
     const [images, setImages] = useState<string[]>([]);
     const [isImageLoading, setIsImageLoading] = useState(false);
+    const [ingredients, setIngredients] = useState<IngredientsProps[]>([]);
 
     const addStep = () => {
         setInstructionSteps([...instructionSteps, '']);
@@ -29,6 +30,28 @@ const Form = () => {
         const updatedSteps = [...instructionSteps];
         updatedSteps[index] = value;
         setInstructionSteps(updatedSteps);
+    };
+
+    const addIngredient = () => {
+        setIngredients([...ingredients, { name: '', quantity: '', unit: 'шт' }]);
+    };
+
+    const removeIngredient = () => {
+        if (ingredients.length > 1) {
+            const updatedIngredients = [...ingredients];
+            updatedIngredients.pop();
+            setIngredients(updatedIngredients);
+        }
+    };
+
+    const handleIngredientChange = (
+        index: number,
+        field: keyof IngredientsProps,
+        value: string
+    ) => {
+        const updatedIngredients = [...ingredients];
+        updatedIngredients[index][field] = value;
+        setIngredients(updatedIngredients);
     };
 
     const validFiles = ['image/jpg', 'image/jpeg', 'image/png'];
@@ -49,7 +72,10 @@ const Form = () => {
             .image(form)
             .then((res) => setImages([res.data.link, ...images]))
             .then(() => setIsImageLoading(false))
-            .catch((error) => toast.error(`Упс, сталася помилка ${error.message}`, toastOptions));
+            .catch((error) => {
+                toast.error(`Упс, сталася помилка ${error.message}`, toastOptions);
+                setIsImageLoading(false);
+            });
     };
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -58,10 +84,11 @@ const Form = () => {
         const formData = new FormData(e.currentTarget);
         const category = formData.get('category') as foodCategory;
         const name = formData.get('name') as string;
+        const time = formData.get('time') as string;
 
-        if (category && name && instructionSteps.length > 0) {
+        if (category && name && instructionSteps.length > 0 && ingredients.length > 0) {
             api.post
-                .food(category, name, instructionSteps, images)
+                .food(category, name, instructionSteps, time, ingredients, images)
                 .then((res) => {
                     if (res.status === 200) {
                         toast.success('Рецепт доданий', toastOptions);
@@ -128,6 +155,62 @@ const Form = () => {
                     />
                 ))}
             </div>
+            <label htmlFor='time'>Час приготування (хв)</label>
+            <input
+                name='time'
+                type='number'
+                placeholder='Хвилин...'
+                className='input w-1/3 md:w-1/4 xl:w-1/5'
+            />
+            <label htmlFor='ingredients'>Інгредієнти</label>
+            {ingredients.map((ingredient, index) => (
+                <div
+                    key={index}
+                    className='space-x-2 sm:space-x-3 flex'
+                >
+                    <input
+                        name='ingredients'
+                        type='text'
+                        placeholder='Назва інгредієнту...'
+                        value={ingredient.name}
+                        onChange={(e) => handleIngredientChange(index, 'name', e.target.value)}
+                        className='input w-full'
+                    />
+                    <input
+                        type='number'
+                        placeholder='Кількість...'
+                        value={ingredient.quantity}
+                        onChange={(e) => handleIngredientChange(index, 'quantity', e.target.value)}
+                        className='input w-full basis-1/3'
+                    />
+                    <select
+                        value={ingredient.unit}
+                        onChange={(e) => handleIngredientChange(index, 'unit', e.target.value)}
+                        className='select'
+                    >
+                        <option value='шт'>шт</option>
+                        <option value='гр'>гр</option>
+                    </select>
+                </div>
+            ))}
+            {ingredients.length > 1 && (
+                <button
+                    type='button'
+                    onClick={removeIngredient}
+                    className='btn-del self-start flex space-x-2'
+                >
+                    <DeleteIcon />
+                    <span>Видалити</span>
+                </button>
+            )}
+            <button
+                type='button'
+                className='btn-suc self-start flex space-x-2'
+                onClick={addIngredient}
+            >
+                <AddIcon />
+                <span>Додати Інгредієнт</span>
+            </button>
 
             {instructionSteps.map((step, index) => (
                 <div

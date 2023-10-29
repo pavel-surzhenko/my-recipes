@@ -59,11 +59,12 @@ const FoodDetails = () => {
                             </div>
                         </div>
                         <h1 className='text-center text-xl font-semibold'>{data?.name}</h1>
-                        <div className='flex space-x-5 justify-between'>
+                        <div className='flex space-x-3 justify-between'>
                             <div className='flex space-x-2 items-center'>
                                 <TimeIcon />{' '}
                                 <p className='hidden xs:block'>
-                                    Час приготування: <span className='font-semibold'>time</span>
+                                    Час приготування:{' '}
+                                    <span className='font-semibold'>{data?.time} хв</span>
                                 </p>
                             </div>
                             {data?.category && (
@@ -74,7 +75,14 @@ const FoodDetails = () => {
                             )}
                         </div>
                         <div>
-                            <p>Інгрідієнти:</p>
+                            {data?.ingredients && (
+                                <div className='flex space-x-2 items-center'>
+                                    <p>Інгрідієнти:</p>
+                                    {data.ingredients.map((ingredient) => (
+                                        <p>{ingredient.name}</p>
+                                    ))}
+                                </div>
+                            )}
                         </div>
                         <div>
                             <h3 className='text-lg font-medium text-center mb-5'>

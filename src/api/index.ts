@@ -1,5 +1,5 @@
 import { BASE_URL } from './options';
-import { FoodCardProps, foodCategory } from '../types';
+import { FoodCardProps, foodCategory, IngredientsProps } from '../types';
 import { fetchData } from '../hooks/useFetch';
 import axios from 'axios';
 
@@ -30,11 +30,20 @@ export const api = {
         },
     },
     post: {
-        async food(category: foodCategory, name: string, instruction: string[], images?: string[]) {
+        async food(
+            category: foodCategory,
+            name: string,
+            instruction: string[],
+            time: string,
+            ingredients: IngredientsProps[],
+            images?: string[]
+        ) {
             const data = await axios.post('http://localhost:4000/food', {
                 category,
                 name,
                 instruction,
+                time,
+                ingredients,
                 images,
             });
             return data;
