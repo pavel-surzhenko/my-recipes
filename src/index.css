@@ -33,7 +33,7 @@
 .btn-suc {
     @apply px-3 py-2 bg-green rounded-md font-medium text-white hover:ring-2 ring-offset-green ring-green;
 }
-label {
+label:not([for='image']) {
     @apply text-lg font-medium;
 }
 .page {
@@ -50,4 +50,7 @@ label {
 }
 .desserts {
     @apply bg-categoryDesserts;
+}
+.white-shadow {
+    @apply after:content-[''] after:w-10 after:h-full after:absolute after:top-0 after:-right-1 after:bg-gradient-to-r from-white/0 to-white;
 }

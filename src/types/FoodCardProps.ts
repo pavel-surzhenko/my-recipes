@@ -1,6 +1,6 @@
 export type FoodCardProps = {
     _id: string;
-    img: string;
+    images?: string[];
     name: string;
     category: foodCategory;
     instruction: string[];

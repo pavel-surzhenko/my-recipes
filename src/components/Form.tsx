@@ -1,13 +1,17 @@
-import axios from 'axios';
-import { useState } from 'react';
+import { ChangeEvent, useState } from 'react';
 import { AddIcon, DeleteIcon } from '../assets';
 import { toast } from 'react-toastify';
 import { toastOptions } from '../lib/toastOptions';
 import { useNavigate } from 'react-router-dom';
+import { api } from '../api';
+import { foodCategory } from '../types';
+import Skeleton from 'react-loading-skeleton';
 
 const Form = () => {
     const navigate = useNavigate();
     const [instructionSteps, setInstructionSteps] = useState<string[]>(['']);
+    const [images, setImages] = useState<string[]>([]);
+    const [isImageLoading, setIsImageLoading] = useState(false);
 
     const addStep = () => {
         setInstructionSteps([...instructionSteps, '']);
@@ -27,20 +31,37 @@ const Form = () => {
         setInstructionSteps(updatedSteps);
     };
 
+    const validFiles = ['image/jpg', 'image/jpeg', 'image/png'];
+
+    const handleFileChange = async (e: ChangeEvent<HTMLInputElement>) => {
+        setIsImageLoading(true);
+        const file = e.target.files?.[0];
+
+        if (!validFiles.find((type) => type === file?.type)) {
+            toast.error('Файл повинен бути JPG/NPG формату', toastOptions);
+            return;
+        }
+
+        const form = new FormData();
+        form.append('image', file as Blob);
+
+        await api.post
+            .image(form)
+            .then((res) => setImages([res.data.link, ...images]))
+            .then(() => setIsImageLoading(false))
+            .catch((error) => toast.error(`Упс, сталася помилка ${error.message}`, toastOptions));
+    };
+
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
         const formData = new FormData(e.currentTarget);
-        const category = formData.get('category');
-        const name = formData.get('name');
+        const category = formData.get('category') as foodCategory;
+        const name = formData.get('name') as string;
 
         if (category && name && instructionSteps.length > 0) {
-            await axios
-                .post('http://localhost:4000/food', {
-                    category,
-                    name,
-                    instruction: instructionSteps,
-                })
+            api.post
+                .food(category, name, instructionSteps, images)
                 .then((res) => {
                     if (res.status === 200) {
                         toast.success('Рецепт доданий', toastOptions);
@@ -72,9 +93,41 @@ const Form = () => {
             <input
                 name='name'
                 type='text'
-                placeholder='Назва'
+                placeholder='Назва...'
                 className='input'
             />
+            <label>Завантажити фото</label>
+            <label
+                htmlFor='image'
+                className='cursor-pointer btn-suc self-start'
+            >
+                Вибрати файл
+            </label>
+            <input
+                id='image'
+                name='image'
+                type='file'
+                onChange={handleFileChange}
+                className='hidden'
+            />
+            <div className='flex space-x-3'>
+                {isImageLoading && (
+                    <div className='leading-none'>
+                        <Skeleton
+                            width={100}
+                            height={100}
+                        />
+                    </div>
+                )}
+                {images?.map((img) => (
+                    <img
+                        className='w-[100px] h-[100px] object-cover rounded-md'
+                        src={img}
+                        key={img}
+                        alt='food'
+                    />
+                ))}
+            </div>
 
             {instructionSteps.map((step, index) => (
                 <div

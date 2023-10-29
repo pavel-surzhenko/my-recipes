@@ -33,16 +33,43 @@ const FoodDetails = () => {
         <section className='page'>
             <Container>
                 <div className='flex  my-5 space-x-5'>
-                    <div className='bg-primary '>{data?.img ? '' : <ImageIcon />}</div>
-                    <div className='grow space-y-3'>
+                    <div className='w-[450px] hidden smd:block rounded-md overflow-hidden'>
+                        {data?.images?.length ? (
+                            <img
+                                src={data.images[0]}
+                                alt={data.name}
+                                className='w-full object-contain'
+                            />
+                        ) : (
+                            <ImageIcon />
+                        )}
+                    </div>
+                    <div className='grow space-y-5'>
+                        <div className='smd:hidden'>
+                            <div className='w-full rounded-md overflow-hidden'>
+                                {data?.images?.length ? (
+                                    <img
+                                        src={data.images[0]}
+                                        alt={data.name}
+                                        className='w-full object-contain'
+                                    />
+                                ) : (
+                                    <ImageIcon />
+                                )}
+                            </div>
+                        </div>
                         <h1 className='text-center text-xl font-semibold'>{data?.name}</h1>
                         <div className='flex space-x-5 justify-between'>
                             <div className='flex space-x-2 items-center'>
-                                <TimeIcon /> <p>Час приготування: time</p>
+                                <TimeIcon />{' '}
+                                <p className='hidden xs:block'>
+                                    Час приготування: <span className='font-semibold'>time</span>
+                                </p>
                             </div>
                             {data?.category && (
                                 <div className='flex space-x-2 items-center'>
-                                    <p>Категорія:</p> <CategoryLabel category={data.category} />
+                                    <p className='hidden xs:block'>Категорія:</p>{' '}
+                                    <CategoryLabel category={data.category} />
                                 </div>
                             )}
                         </div>
@@ -55,21 +82,27 @@ const FoodDetails = () => {
                             </h3>
                             {data?.instruction?.map((step, index) => (
                                 <div key={index}>
-                                    <p className='font-medium text-center mb-2'>Крок {index + 1}</p>
+                                    <p className='font-medium underline underline-offset-4 mb-2'>
+                                        Крок {index + 1}
+                                    </p>
                                     <p>{step}</p>
                                 </div>
                             ))}
                         </div>
                     </div>
                 </div>
-                <div>
-                    <h4 className='text-lg font-semibold mb-5'>Дивіться також</h4>
-                    <div className='flex space-x-5 overflow-x-scroll'>
-                        {similarFood?.map((food) => (
-                            <FoodCard {...food} />
-                        ))}
+                {similarFood && similarFood.length && (
+                    <div className='mb-5'>
+                        <h4 className='text-lg font-semibold mb-5'>Дивіться також</h4>
+                        <div className={`relative ${similarFood.length > 4 ? 'white-shadow' : ''}`}>
+                            <div className='flex space-x-5 overflow-x-scroll'>
+                                {similarFood?.map(
+                                    (food) => food._id !== data?._id && <FoodCard {...food} />
+                                )}
+                            </div>
+                        </div>
                     </div>
-                </div>
+                )}
             </Container>
         </section>
     );

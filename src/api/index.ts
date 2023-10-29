@@ -1,6 +1,7 @@
 import { BASE_URL } from './options';
-import { FoodCardProps } from '../types';
+import { FoodCardProps, foodCategory } from '../types';
 import { fetchData } from '../hooks/useFetch';
+import axios from 'axios';
 
 export const api = {
     get: {
@@ -26,6 +27,23 @@ export const api = {
 
         async byId(id: string): Promise<FoodCardProps> {
             return fetchData<FoodCardProps>(`${BASE_URL}food/${id}`);
+        },
+    },
+    post: {
+        async food(category: foodCategory, name: string, instruction: string[], images?: string[]) {
+            const data = await axios.post('http://localhost:4000/food', {
+                category,
+                name,
+                instruction,
+                images,
+            });
+            return data;
+        },
+
+        async image(img: FormData) {
+            const data = await axios.post('http://localhost:4000/image', img);
+
+            return data;
         },
     },
 };

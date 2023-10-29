@@ -1,1 +1,1 @@
-export type { FoodCardProps } from './FoodCardProps';
+export type { FoodCardProps, foodCategory } from './FoodCardProps';

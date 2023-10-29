@@ -4,7 +4,14 @@ export default {
     theme: {
         extend: {
             gridTemplateColumns: {
-                1: 'repeat(1, minmax(350px, 80%))',
+                1: 'repeat(1, minmax(300px, 65%))',
+            },
+            screens: {
+                xs: '500px',
+                smd: '850px',
+            },
+            boxShadow: {
+                card: 'rgba(0, 0, 0, 0.35) 0px 5px 15px;',
             },
         },
         colors: {
