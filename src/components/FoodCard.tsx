@@ -3,6 +3,8 @@ import { ImageIcon } from '../assets/ImageIcon';
 import { FoodCardProps } from '../types';
 import CategoryLabel from './CategoryLabel';
 import TimeIcon from '../assets/TimeIcon';
+import { LazyLoadImage } from 'react-lazy-load-image-component';
+import 'react-lazy-load-image-component/src/effects/blur.css';
 
 const FoodCard: React.FC<FoodCardProps> = ({ name, category, images, _id, time }) => {
     return (
@@ -10,9 +12,10 @@ const FoodCard: React.FC<FoodCardProps> = ({ name, category, images, _id, time }
             <Link to={`/${category}/${_id}`}>
                 <div className='w-full h-[200px] sm:h-[225px]  lg:h-[250px] rounded-t-md overflow-hidden border-b border-[#ddd]'>
                     {images?.length ? (
-                        <img
-                            src={images[0]}
+                        <LazyLoadImage
                             alt={name}
+                            src={images[0]}
+                            effect='blur'
                             className='w-full h-[200px] sm:h-[225px]  lg:h-[250px] object-cover aspect-video'
                         />
                     ) : (

@@ -27,9 +27,6 @@ If you are developing a production application, we recommend updating the config
 -   Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
 
 to do
-перевірити чи працює реакт лейзі
 sort backend
 get random dishesh from server
-add photo ro mongo
-add cock time
-add ingridients
+add ingredients table

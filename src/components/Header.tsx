@@ -53,11 +53,36 @@ const Header = () => {
                 {isMenuOpen && (
                     <div className='bg-primary h-screen w-screen'>
                         <nav className='flex flex-col space-y-3 font-semibold ml-5 text-2xl mt-5'>
-                            <NavLink to={'/'}>Головна</NavLink>
-                            <NavLink to={'/soups'}>Супи</NavLink>
-                            <NavLink to={'/main'}>Другі страви</NavLink>
-                            <NavLink to={'/salads'}>Салати</NavLink>
-                            <NavLink to={'/desserts'}>Десерти</NavLink>
+                            <NavLink
+                                to={'/'}
+                                onClick={() => setIsMenuOpen(false)}
+                            >
+                                Головна
+                            </NavLink>
+                            <NavLink
+                                to={'/soups'}
+                                onClick={() => setIsMenuOpen(false)}
+                            >
+                                Супи
+                            </NavLink>
+                            <NavLink
+                                to={'/main'}
+                                onClick={() => setIsMenuOpen(false)}
+                            >
+                                Другі страви
+                            </NavLink>
+                            <NavLink
+                                to={'/salads'}
+                                onClick={() => setIsMenuOpen(false)}
+                            >
+                                Салати
+                            </NavLink>
+                            <NavLink
+                                to={'/desserts'}
+                                onClick={() => setIsMenuOpen(false)}
+                            >
+                                Десерти
+                            </NavLink>
                         </nav>
                     </div>
                 )}
