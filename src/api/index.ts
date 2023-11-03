@@ -38,7 +38,7 @@ export const api = {
             ingredients: IngredientsProps[],
             images?: string[]
         ) {
-            const data = await axios.post('http://localhost:4000/food', {
+            const data = await axios.post(`${BASE_URL}food`, {
                 category,
                 name,
                 instruction,
@@ -50,7 +50,7 @@ export const api = {
         },
 
         async image(img: FormData) {
-            const data = await axios.post('http://localhost:4000/image', img);
+            const data = await axios.post(`${BASE_URL}image`, img);
 
             return data;
         },

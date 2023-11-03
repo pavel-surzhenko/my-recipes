@@ -13,6 +13,9 @@ export default {
             boxShadow: {
                 card: 'rgba(0, 0, 0, 0.35) 0px 5px 15px;',
             },
+            backgroundImage: {
+                'new_recipes-bg': 'url(/background.svg)',
+            },
         },
         colors: {
             primary: '#A7727D',

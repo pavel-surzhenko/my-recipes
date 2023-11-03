@@ -43,7 +43,6 @@ const Header = () => {
                             {isThemeDark ? <SunIcon /> : <MoonIcon />}
                         </div>
                     </div>
-
                     <div className='block md:hidden order-1'>
                         <div onClick={() => setIsMenuOpen(!isMenuOpen)}>
                             {isMenuOpen ? <CloseIcon /> : <MenuIcon />}

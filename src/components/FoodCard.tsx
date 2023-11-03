@@ -16,7 +16,7 @@ const FoodCard: React.FC<FoodCardProps> = ({ name, category, images, _id, time }
                             alt={name}
                             src={images[0]}
                             effect='blur'
-                            className='w-full h-[200px] sm:h-[225px]  lg:h-[250px] object-cover aspect-video'
+                            className='w-[300px] xs:w-full h-[200px] sm:h-[225px]  lg:h-[250px] object-cover aspect-video'
                         />
                     ) : (
                         <ImageIcon />

@@ -62,6 +62,7 @@ const Form = () => {
 
         if (!validFiles.find((type) => type === file?.type)) {
             toast.error('Файл повинен бути JPG/NPG формату', toastOptions);
+            setIsImageLoading(false);
             return;
         }
 
@@ -71,11 +72,10 @@ const Form = () => {
         await api.post
             .image(form)
             .then((res) => setImages([res.data.link, ...images]))
-            .then(() => setIsImageLoading(false))
             .catch((error) => {
                 toast.error(`Упс, сталася помилка ${error.message}`, toastOptions);
-                setIsImageLoading(false);
-            });
+            })
+            .finally(() => setIsImageLoading(false));
     };
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {

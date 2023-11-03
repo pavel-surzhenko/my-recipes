@@ -5,3 +5,4 @@ export { MoonIcon } from './MoonIcon';
 export { AddIcon } from './AddIcon';
 export { DeleteIcon } from './DeleteIcon';
 export { SearchIcon } from './SearchIcon';
+export { BackIcon } from './BackIcon';

@@ -3,7 +3,7 @@ import Form from '../components/Form';
 
 const NewRecipe = () => {
     return (
-        <section className='page'>
+        <section className={`page bg-new_recipes-bg`}>
             <Container>
                 <Form />
             </Container>
