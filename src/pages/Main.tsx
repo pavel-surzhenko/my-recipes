@@ -5,21 +5,25 @@ import FoodGrid from '../components/FoodGrid';
 import NewRecipeBtn from '../components/NewRecipeBtn';
 import { toast } from 'react-toastify';
 import { api } from '../api';
+import SkeletonGrid from '../components/Skeleton/SkeletonGrid';
 
 const Main = () => {
     const [data, setData] = useState<FoodCardProps[]>();
+    const [loading, setLoading] = useState(false);
 
     useEffect(() => {
+        setLoading(true);
         api.get
             .main()
             .then((res) => setData(res))
-            .catch((err) => toast.error(`Упс, сталась помилка: ${err.message}`));
+            .catch((err) => toast.error(`Упс, сталась помилка: ${err.message}`))
+            .finally(() => setLoading(false));
     }, []);
     return (
         <section className='page'>
             <Container>
                 <NewRecipeBtn />
-                {data && <FoodGrid data={data} />}
+                {loading ? <SkeletonGrid /> : <>{data && <FoodGrid data={data} />}</>}
             </Container>
         </section>
     );

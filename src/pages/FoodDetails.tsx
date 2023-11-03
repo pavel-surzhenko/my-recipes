@@ -9,6 +9,7 @@ import { foodCategory } from '../types/FoodCardProps';
 import { toast } from 'react-toastify';
 import FoodCard from '../components/FoodCard';
 import CategoryLabel from '../components/CategoryLabel';
+import SkeletonDetailsPage from '../components/Skeleton/SkeletonDetailsPage';
 
 const FoodDetails = () => {
     const { id, foodType } = useParams<{ id: string; foodType: foodCategory }>();
@@ -39,7 +40,7 @@ const FoodDetails = () => {
         <section className='page'>
             <Container>
                 {loading ? (
-                    <div>loading</div>
+                    <SkeletonDetailsPage />
                 ) : (
                     <>
                         <div className='flex  my-5 space-x-5'>
