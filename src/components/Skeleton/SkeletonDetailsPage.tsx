@@ -93,7 +93,7 @@ const SkeletonDetailsPage = () => {
                         </div>
                     </div>
 
-                    <div className='mb-5 space-y-2 hidden lg:block'>
+                    <div className='mb-5 space-y-2 hidden md:block'>
                         <Skeleton
                             width={200}
                             height={25}

@@ -43,8 +43,8 @@ const FoodDetails = () => {
                     <SkeletonDetailsPage />
                 ) : (
                     <>
-                        <div className='flex  my-5 space-x-5'>
-                            <div className='w-[450px] hidden smd:block rounded-md overflow-hidden'>
+                        <div className='flex  my-5 smd:space-x-5'>
+                            <div className='w-[425px] hidden smd:block rounded-md overflow-hidden'>
                                 {data?.images?.length ? (
                                     <img
                                         src={data.images[0]}
@@ -56,8 +56,8 @@ const FoodDetails = () => {
                                 )}
                             </div>
                             <div className='grow space-y-5'>
-                                <div className='smd:hidden'>
-                                    <div className='w-full rounded-md overflow-hidden'>
+                                <div className='smd:hidden flex justify-center'>
+                                    <div className='w-[min(100%,700px)] rounded-md overflow-hidden'>
                                         {data?.images?.length ? (
                                             <img
                                                 src={data.images[0]}
@@ -71,7 +71,7 @@ const FoodDetails = () => {
                                 </div>
                                 <h1 className='text-center text-xl font-semibold'>{data?.name}</h1>
                                 <div className='flex space-x-3 justify-between'>
-                                    <div className='flex space-x-2 items-center'>
+                                    <div className='flex space-x-2 items-center whitespace-nowrap'>
                                         <TimeIcon />{' '}
                                         <p className='hidden xs:block'>
                                             Час приготування:{' '}
@@ -87,28 +87,52 @@ const FoodDetails = () => {
                                 </div>
                                 <div>
                                     {data?.ingredients && (
-                                        <div className='flex space-x-2 items-center'>
-                                            <p>Інгрідієнти:</p>
-                                            {data.ingredients.map((ingredient) => (
-                                                <p>{ingredient.name}</p>
-                                            ))}
+                                        <div className='space-y-3'>
+                                            <div>Інгрідієнти:</div>
+                                            <table className='min-w-full bg-third dark:bg-thirdDark shadow-md rounded-lg overflow-hidden'>
+                                                <thead>
+                                                    <tr className='text-left border-secondary dark:border-secondaryDark border-b-2'>
+                                                        <th className='px-5 py-3 w-2/3 font-medium border-secondary dark:border-secondaryDark border-r-2'>
+                                                            Інгредієнт
+                                                        </th>
+                                                        <th className='px-5 py-3 w-1/3 font-medium'>
+                                                            Кількість
+                                                        </th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody className='text-gray-700'>
+                                                    {data.ingredients.map((ingredient) => (
+                                                        <tr className='border-secondary dark:border-secondaryDark border-b'>
+                                                            <td className='py-2 px-4 border-secondary dark:border-secondaryDark border-r-2'>
+                                                                {ingredient.name}
+                                                            </td>
+                                                            <td className='py-2 px-4'>
+                                                                {ingredient.quantity +
+                                                                    ' ' +
+                                                                    ingredient.unit}
+                                                            </td>
+                                                        </tr>
+                                                    ))}
+                                                </tbody>
+                                            </table>
                                         </div>
                                     )}
                                 </div>
-                                <div>
-                                    <h3 className='text-lg font-medium text-center mb-5'>
-                                        Спосіб приготування
-                                    </h3>
-                                    {data?.instruction?.map((step, index) => (
-                                        <div key={index}>
-                                            <p className='font-medium underline underline-offset-4 mb-2'>
-                                                Крок {index + 1}
-                                            </p>
-                                            <p>{step}</p>
-                                        </div>
-                                    ))}
-                                </div>
                             </div>
+                        </div>
+
+                        <div className='mb-5'>
+                            <h3 className='text-lg font-medium text-center mb-5'>
+                                Спосіб приготування
+                            </h3>
+                            {data?.instruction?.map((step, index) => (
+                                <div key={index}>
+                                    <p className='font-medium underline underline-offset-4 mb-2'>
+                                        Крок {index + 1}
+                                    </p>
+                                    <p>{step}</p>
+                                </div>
+                            ))}
                         </div>
 
                         {similarFood && similarFood.length && (
