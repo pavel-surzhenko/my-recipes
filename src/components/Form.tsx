@@ -1,5 +1,5 @@
 import { ChangeEvent, useState } from 'react';
-import { AddIcon, DeleteIcon } from '../assets';
+import { AddIcon, CloseIcon, DeleteIcon } from '../assets';
 import { toast } from 'react-toastify';
 import { toastOptions } from '../lib/toastOptions';
 import { useNavigate } from 'react-router-dom';
@@ -74,9 +74,22 @@ const Form = () => {
             .image(form)
             .then((res) => setImages([res.data.link, ...images]))
             .catch((error) => {
-                toast.error(`Упс, сталася помилка ${error.message}`, toastOptions);
+                toast.error(`Упс, сталась помилка ${error.message}`, toastOptions);
             })
             .finally(() => setIsImageLoading(false));
+    };
+
+    const handleDeleteImage = async (image: string) => {
+        const parts = image.split('/');
+
+        const id = parts[parts.length - 1];
+
+        await api.delete
+            .image(id)
+            .then(() => setImages(images.filter((img) => img !== image)))
+            .catch((error) => {
+                toast.error(`Упс, сталась помилка ${error.message}`, toastOptions);
+            });
     };
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -108,7 +121,7 @@ const Form = () => {
     return (
         <form
             onSubmit={handleSubmit}
-            className='flex flex-col p-5 bg-secondary dark:bg-secondaryDark space-y-3 m-5 w-[min(75%,700px)] mx-auto'
+            className='flex flex-col p-5 bg-secondary dark:bg-secondaryDark space-y-3 m-5 w-[min(100%,700px)] mx-auto'
         >
             <label htmlFor='category'>
                 Оберіть категорію <span className='text-red'>*</span>
@@ -149,18 +162,26 @@ const Form = () => {
                 {isImageLoading && (
                     <div className='leading-none'>
                         <Skeleton
-                            width={100}
-                            height={100}
+                            width={window.innerWidth > 1024 ? 150 : 100}
+                            height={window.innerWidth > 1024 ? 150 : 100}
                         />
                     </div>
                 )}
                 {images?.map((img) => (
-                    <img
-                        className='w-[100px] h-[100px] object-cover rounded-md'
-                        src={img}
-                        key={img}
-                        alt='food'
-                    />
+                    <div className='relative'>
+                        <img
+                            className='w-[100px] lg:w-[150px] h-[100px] lg:h-[150px] object-cover rounded-md'
+                            src={img}
+                            key={img}
+                            alt='food'
+                        />
+                        <button
+                            className='absolute top-1 right-1 bg-secondary dark:bg-secondaryDark rounded-sm text-red cursor-pointer'
+                            onClick={() => handleDeleteImage(img)}
+                        >
+                            <CloseIcon />
+                        </button>
+                    </div>
                 ))}
             </div>
             <label htmlFor='time'>
@@ -198,7 +219,7 @@ const Form = () => {
                     <select
                         value={ingredient.unit}
                         onChange={(e) => handleIngredientChange(index, 'unit', e.target.value)}
-                        className='select'
+                        className='select px-2'
                     >
                         <option value='шт'>шт</option>
                         <option value='гр'>гр</option>

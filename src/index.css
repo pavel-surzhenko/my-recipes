@@ -9,13 +9,13 @@
         min-height: 100vh;
     }
     body {
-        min-height: 100vh;
-        display: flex;
-        flex-direction: column;
-        @apply bg-primary dark:bg-primaryDark;
+        @apply flex flex-col min-h-screen bg-primary dark:bg-primaryDark;
     }
 }
 
+select {
+    @apply appearance-none;
+}
 #root {
     @apply flex flex-col flex-1;
 }

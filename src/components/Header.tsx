@@ -50,8 +50,8 @@ const Header = () => {
                     </div>
                 </div>
                 {isMenuOpen && (
-                    <div className='bg-primary h-screen w-screen'>
-                        <nav className='flex flex-col space-y-3 font-semibold ml-5 text-2xl mt-5'>
+                    <div className='bg-primary dark:bg-primaryDark h-screen w-screen'>
+                        <nav className='flex flex-col space-y-5 font-semibold ml-5 text-2xl mt-10'>
                             <NavLink
                                 to={'/'}
                                 onClick={() => setIsMenuOpen(false)}

@@ -2,6 +2,7 @@ import { BASE_URL } from './options';
 import { FoodCardProps, foodCategory, postFoodProps } from '../types';
 import { fetchData } from '../hooks/fetchData';
 import { postData } from '../hooks/postData';
+import { deleteData } from '../hooks/deleteData';
 
 export const api = {
     get: {
@@ -44,6 +45,12 @@ export const api = {
 
         async image(img: FormData) {
             return postData<FormData>(`${BASE_URL}image`, img);
+        },
+    },
+
+    delete: {
+        async image(img: string) {
+            return deleteData(`${BASE_URL}image?id=${img}`);
         },
     },
 };
