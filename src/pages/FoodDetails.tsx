@@ -5,7 +5,7 @@ import { FoodCardProps } from '../types';
 import Container from '../components/Container';
 import { ImageIcon } from '../assets/ImageIcon';
 import TimeIcon from '../assets/TimeIcon';
-import { foodCategory } from '../types/FoodCardProps';
+import { foodCategory } from '../types/foodCardProps';
 import { toast } from 'react-toastify';
 import FoodCard from '../components/FoodCard';
 import CategoryLabel from '../components/CategoryLabel';

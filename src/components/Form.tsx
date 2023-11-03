@@ -11,8 +11,9 @@ const Form = () => {
     const navigate = useNavigate();
     const [instructionSteps, setInstructionSteps] = useState<string[]>(['']);
     const [images, setImages] = useState<string[]>([]);
-    const [isImageLoading, setIsImageLoading] = useState(false);
+    const [isImageLoading, setIsImageLoading] = useState<boolean>(false);
     const [ingredients, setIngredients] = useState<IngredientsProps[]>([]);
+    const [isAllFields, setIsAllFields] = useState<boolean>(true);
 
     const addStep = () => {
         setInstructionSteps([...instructionSteps, '']);
@@ -87,8 +88,9 @@ const Form = () => {
         const time = formData.get('time') as string;
 
         if (category && name && instructionSteps.length > 0 && ingredients.length > 0) {
+            setIsAllFields(true);
             api.post
-                .food(category, name, instructionSteps, time, ingredients, images)
+                .food({ category, name, instruction: instructionSteps, time, ingredients, images })
                 .then((res) => {
                     if (res.status === 200) {
                         toast.success('Рецепт доданий', toastOptions);
@@ -98,6 +100,8 @@ const Form = () => {
                 .catch((err) => {
                     toast.error(`Упс, сталась помилка: ${err.message}`);
                 });
+        } else {
+            setIsAllFields(false);
         }
     };
 
@@ -106,7 +110,9 @@ const Form = () => {
             onSubmit={handleSubmit}
             className='flex flex-col p-5 bg-secondary dark:bg-secondaryDark space-y-3 m-5 w-[min(75%,700px)] mx-auto'
         >
-            <label htmlFor='category'>Оберіть категорію</label>
+            <label htmlFor='category'>
+                Оберіть категорію <span className='text-red'>*</span>
+            </label>
             <select
                 name='category'
                 className='input'
@@ -116,7 +122,9 @@ const Form = () => {
                 <option value='salads'>Салати</option>
                 <option value='desserts'>Десерти</option>
             </select>
-            <label htmlFor='name'>Назва</label>
+            <label htmlFor='name'>
+                Назва <span className='text-red'>*</span>
+            </label>
             <input
                 name='name'
                 type='text'
@@ -155,14 +163,18 @@ const Form = () => {
                     />
                 ))}
             </div>
-            <label htmlFor='time'>Час приготування (хв)</label>
+            <label htmlFor='time'>
+                Час приготування (хв) <span className='text-red'>*</span>
+            </label>
             <input
                 name='time'
                 type='number'
                 placeholder='Хвилин...'
                 className='input w-1/3 md:w-1/4 xl:w-1/5'
             />
-            <label htmlFor='ingredients'>Інгредієнти</label>
+            <label htmlFor='ingredients'>
+                Інгредієнти <span className='text-red'>*</span>
+            </label>
             {ingredients.map((ingredient, index) => (
                 <div
                     key={index}
@@ -217,7 +229,9 @@ const Form = () => {
                     key={index}
                     className='flex flex-col space-y-3'
                 >
-                    <label htmlFor={`instruction-${index + 1}`}>Крок {index + 1}</label>
+                    <label htmlFor={`instruction-${index + 1}`}>
+                        Крок<span className='text-red'>*</span> {index + 1}
+                    </label>
                     <textarea
                         name={`instruction-${index + 1}`}
                         rows={3}
@@ -252,6 +266,11 @@ const Form = () => {
             >
                 Зберегти
             </button>
+            {!isAllFields && (
+                <div>
+                    <span className='text-red'>*</span> Заповніть всі обовя'зкові поля{' '}
+                </div>
+            )}
         </form>
     );
 };

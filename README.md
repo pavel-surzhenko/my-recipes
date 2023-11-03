@@ -28,5 +28,6 @@ If you are developing a production application, we recommend updating the config
 
 to do
 sort backend
-get random dishesh from server
 add ingredients table
+home page sort and filter all food
+slot machine animation ?

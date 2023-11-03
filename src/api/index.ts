@@ -1,7 +1,7 @@
 import { BASE_URL } from './options';
-import { FoodCardProps, foodCategory, IngredientsProps } from '../types';
-import { fetchData } from '../hooks/useFetch';
-import axios from 'axios';
+import { FoodCardProps, foodCategory, postFoodProps } from '../types';
+import { fetchData } from '../hooks/fetchData';
+import { postData } from '../hooks/postData';
 
 export const api = {
     get: {
@@ -28,31 +28,22 @@ export const api = {
         async byId(id: string): Promise<FoodCardProps> {
             return fetchData<FoodCardProps>(`${BASE_URL}food/${id}`);
         },
+
+        async random(category: foodCategory): Promise<FoodCardProps> {
+            return fetchData<FoodCardProps>(`${BASE_URL}random?category=${category}`);
+        },
+
+        // async r(category: foodCategory): Promise<FoodCardProps> {
+        //     return fetchData<FoodCardProps>(`http://localhost:4000/random?category=${category}`);
+        // },
     },
     post: {
-        async food(
-            category: foodCategory,
-            name: string,
-            instruction: string[],
-            time: string,
-            ingredients: IngredientsProps[],
-            images?: string[]
-        ) {
-            const data = await axios.post(`${BASE_URL}food`, {
-                category,
-                name,
-                instruction,
-                time,
-                ingredients,
-                images,
-            });
-            return data;
+        async food(data: postFoodProps) {
+            return postData<postFoodProps>(`${BASE_URL}food`, data);
         },
 
         async image(img: FormData) {
-            const data = await axios.post(`${BASE_URL}image`, img);
-
-            return data;
+            return postData<FormData>(`${BASE_URL}image`, img);
         },
     },
 };
