@@ -13,9 +13,9 @@ const SkeletonCard = () => {
     const { isThemeDark } = useContext(ThemeContext);
 
     return (
-        <div className='max-w-[250px] space-y-2 '>
+        <div className='w-full space-y-2 '>
             <Skeleton
-                width={250}
+                width='100%'
                 className='h-[200px] sm:h-[225px]  lg:h-[250px]'
                 borderRadius={8}
                 baseColor={isThemeDark ? secondaryDark : secondary}

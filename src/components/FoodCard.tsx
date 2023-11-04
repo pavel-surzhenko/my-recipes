@@ -10,13 +10,13 @@ const FoodCard: React.FC<FoodCardProps> = ({ name, category, images, _id, time }
     return (
         <div className='bg-secondary dark:bg-secondaryDark rounded-md space-y-3 flex flex-col min-w-[250px] shadow-card'>
             <Link to={`/${category}/${_id}`}>
-                <div className='w-full h-[200px] sm:h-[225px]  lg:h-[250px] rounded-t-md overflow-hidden border-b border-[#ddd]'>
+                <div className='w-full h-[200px] sm:h-[225px] lg:h-[250px] rounded-t-md overflow-hidden border-b border-[#ddd]'>
                     {images?.length ? (
                         <LazyLoadImage
                             alt={name}
                             src={images[0]}
                             effect='blur'
-                            className='w-[300px] xs:w-full h-[200px] sm:h-[225px]  lg:h-[250px] object-cover aspect-video'
+                            className='xs:w-full h-[200px] sm:h-[225px]  lg:h-[250px] object-cover aspect-video'
                         />
                     ) : (
                         <ImageIcon />

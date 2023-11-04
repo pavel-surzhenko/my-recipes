@@ -28,6 +28,7 @@ If you are developing a production application, we recommend updating the config
 
 to do
 sort backend
-add ingredients table
 home page sort and filter all food
 slot machine animation ?
+add delete recipe
+add loading for random

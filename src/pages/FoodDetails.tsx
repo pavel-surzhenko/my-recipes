@@ -136,17 +136,25 @@ const FoodDetails = () => {
                         </div>
 
                         {similarFood && similarFood.length && (
-                            <div className='mb-5'>
+                            <div className='my-10'>
                                 <h4 className='text-lg font-semibold mb-5'>Дивіться також</h4>
                                 <div
                                     className={`relative ${
                                         similarFood.length > 4 ? 'white-shadow' : ''
                                     }`}
                                 >
-                                    <div className='flex space-x-5 overflow-x-scroll'>
+                                    <div
+                                        className={`${
+                                            similarFood.length > 4 ? 'overflow-x-scroll' : ''
+                                        } flex space-x-5 `}
+                                    >
                                         {similarFood?.map(
                                             (food) =>
-                                                food._id !== data?._id && <FoodCard {...food} />
+                                                food._id !== data?._id && (
+                                                    <div className='w-[250px]'>
+                                                        <FoodCard {...food} />
+                                                    </div>
+                                                )
                                         )}
                                     </div>
                                 </div>

@@ -5,11 +5,14 @@ import NewRecipeBtn from '../components/NewRecipeBtn';
 import { api } from '../api';
 import { toast } from 'react-toastify';
 import FoodCard from '../components/FoodCard';
+import SkeletonCard from '../components/Skeleton/SkeletonCard';
 
 const Home = () => {
     const [data, setData] = useState<FoodCardProps>();
+    const [randomLoading, setRandomLoading] = useState(false);
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+        setRandomLoading(true);
         e.preventDefault();
 
         const formData = new FormData(e.currentTarget);
@@ -19,7 +22,8 @@ const Home = () => {
             api.get
                 .random(category)
                 .then((res) => setData(res))
-                .catch((err) => toast.error(`Упс, сталась помилка: ${err.message}`));
+                .catch((err) => toast.error(`Упс, сталась помилка: ${err.message}`))
+                .finally(() => setRandomLoading(false));
         }
     };
 
@@ -32,7 +36,7 @@ const Home = () => {
                         Що готуємо сьогодні?
                     </h1>
                     <h3 className='text-sm md:text-base text-center'>
-                        Втомились обирати? Отримуй випадковий рецепт, можливо це саме те, що тобі
+                        Втомились обирати? Отримуй випадковий рецепт, можливо, це саме те, що тобі
                         потрібно :)
                     </h3>
                     <form
@@ -63,13 +67,19 @@ const Home = () => {
                     </form>
                     <div className='flex justify-center '>
                         <div className='w-[300px]'>
-                            {data ? (
-                                <FoodCard {...data} />
+                            {randomLoading ? (
+                                <SkeletonCard />
                             ) : (
-                                <div className='bg-secondary dark:bg-secondaryDark rounded-md h-[308px] lg:h-[333px] py-10 px-5 space-y-5 opacity-50'>
-                                    <div className='text-center text-9xl'>?</div>
-                                    <div className='text-center'>випадковий рецепт</div>
-                                </div>
+                                <>
+                                    {data ? (
+                                        <FoodCard {...data} />
+                                    ) : (
+                                        <div className='bg-secondary dark:bg-secondaryDark rounded-md h-[308px] lg:h-[333px] py-10 px-5 space-y-5 opacity-50'>
+                                            <div className='text-center text-9xl'>?</div>
+                                            <div className='text-center'>випадковий рецепт</div>
+                                        </div>
+                                    )}
+                                </>
                             )}
                         </div>
                     </div>
