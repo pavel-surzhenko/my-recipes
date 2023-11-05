@@ -34,10 +34,6 @@ export const api = {
         async random(category: foodCategory): Promise<FoodCardProps> {
             return fetchData<FoodCardProps>(`${BASE_URL}random?category=${category}`);
         },
-
-        // async r(category: foodCategory): Promise<FoodCardProps> {
-        //     return fetchData<FoodCardProps>(`http://localhost:4000/`);
-        // },
     },
     post: {
         async food(data: postFoodProps) {

@@ -8,8 +8,7 @@ import { toast } from 'react-toastify';
 import FoodCard from '../components/FoodCard';
 import CategoryLabel from '../components/CategoryLabel';
 import SkeletonDetailsPage from '../components/Skeleton/SkeletonDetailsPage';
-import { ImageIcon, TrashIcon, TimeIcon, PencilIcon } from '../assets';
-import { toastOptions } from '../lib/toastOptions';
+import { ImageIcon, TimeIcon, PencilIcon } from '../assets';
 import ConfirmModal from '../components/ConfirmModal';
 
 const FoodDetails = () => {
@@ -18,20 +17,6 @@ const FoodDetails = () => {
     const [similarFood, setSimilarFood] = useState<FoodCardProps[] | null>(null);
     const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
-
-    const handleDelete = (id: string) => {
-        api.delete
-            .food(id)
-            .then((res) => {
-                if (res.status === 200) {
-                    toast.success('Рецепт видалений', toastOptions);
-                    navigate('/');
-                }
-            })
-            .catch((err) => {
-                toast.error(`Упс, сталась помилка: ${err.message}`);
-            });
-    };
 
     useEffect(() => {
         setLoading(true);
