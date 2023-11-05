@@ -6,7 +6,7 @@ import { ThemeContext } from '../../lib/context';
 const SkeletonForm = () => {
     const {
         theme: {
-            colors: { third, thirdDark },
+            colors: { secondary, secondaryDark },
         },
     } = useTailwind();
 
@@ -18,99 +18,99 @@ const SkeletonForm = () => {
                 width='30%'
                 className='h-[25px]'
                 borderRadius={8}
-                baseColor={isThemeDark ? thirdDark : third}
+                baseColor={isThemeDark ? secondaryDark : secondary}
             />
             <Skeleton
                 width='100%'
                 className='h-[35px]'
                 borderRadius={8}
-                baseColor={isThemeDark ? thirdDark : third}
+                baseColor={isThemeDark ? secondaryDark : secondary}
             />
             <Skeleton
                 width='30%'
                 className='h-[25px]'
                 borderRadius={8}
-                baseColor={isThemeDark ? thirdDark : third}
+                baseColor={isThemeDark ? secondaryDark : secondary}
             />
             <Skeleton
                 width='100%'
                 className='h-[35px]'
                 borderRadius={8}
-                baseColor={isThemeDark ? thirdDark : third}
+                baseColor={isThemeDark ? secondaryDark : secondary}
             />
             <Skeleton
                 width='30%'
                 className='h-[25px]'
                 borderRadius={8}
-                baseColor={isThemeDark ? thirdDark : third}
+                baseColor={isThemeDark ? secondaryDark : secondary}
             />
             <Skeleton
                 width='20%'
                 className='h-[35px]'
                 borderRadius={8}
-                baseColor={isThemeDark ? thirdDark : third}
+                baseColor={isThemeDark ? secondaryDark : secondary}
             />
             <Skeleton
                 width='30%'
                 className='h-[25px]'
                 borderRadius={8}
-                baseColor={isThemeDark ? thirdDark : third}
+                baseColor={isThemeDark ? secondaryDark : secondary}
             />
             <Skeleton
                 width='20%'
                 className='h-[35px]'
                 borderRadius={8}
-                baseColor={isThemeDark ? thirdDark : third}
+                baseColor={isThemeDark ? secondaryDark : secondary}
             />
             <Skeleton
                 width='30%'
                 className='h-[25px]'
                 borderRadius={8}
-                baseColor={isThemeDark ? thirdDark : third}
+                baseColor={isThemeDark ? secondaryDark : secondary}
             />
             <div className='flex space-x-3'>
                 <Skeleton
                     containerClassName='flex-1 basis-1/3'
                     className='h-[35px]'
                     borderRadius={8}
-                    baseColor={isThemeDark ? thirdDark : third}
+                    baseColor={isThemeDark ? secondaryDark : secondary}
                 />
                 <Skeleton
                     containerClassName='flex-1 basis-1/6'
                     className='h-[35px]'
                     borderRadius={8}
-                    baseColor={isThemeDark ? thirdDark : third}
+                    baseColor={isThemeDark ? secondaryDark : secondary}
                 />
                 <Skeleton
                     containerClassName='flex-1 '
                     className='h-[35px]'
                     borderRadius={8}
-                    baseColor={isThemeDark ? thirdDark : third}
+                    baseColor={isThemeDark ? secondaryDark : secondary}
                 />
             </div>
             <Skeleton
                 width='30%'
                 className='h-[25px]'
                 borderRadius={8}
-                baseColor={isThemeDark ? thirdDark : third}
+                baseColor={isThemeDark ? secondaryDark : secondary}
             />
             <Skeleton
                 width='100%'
                 className='h-[100px]'
                 borderRadius={8}
-                baseColor={isThemeDark ? thirdDark : third}
+                baseColor={isThemeDark ? secondaryDark : secondary}
             />
             <Skeleton
                 width='20%'
                 className='h-[35px]'
                 borderRadius={8}
-                baseColor={isThemeDark ? thirdDark : third}
+                baseColor={isThemeDark ? secondaryDark : secondary}
             />
             <Skeleton
                 width='100%'
                 className='h-[35px]'
                 borderRadius={8}
-                baseColor={isThemeDark ? thirdDark : third}
+                baseColor={isThemeDark ? secondaryDark : secondary}
             />
         </div>
     );

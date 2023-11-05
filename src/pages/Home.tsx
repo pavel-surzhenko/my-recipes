@@ -60,7 +60,7 @@ const Home = () => {
                         </select>
                         <button
                             type='submit'
-                            className='btn-suc flex space-x-2'
+                            className='btn flex space-x-2'
                         >
                             Пошук
                         </button>

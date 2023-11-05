@@ -130,9 +130,9 @@ const Form: React.FC<Partial<FoodCardProps>> = ({
             api.post
                 .food({ category, name, instruction: instructionSteps, time, ingredients, images })
                 .then((res) => {
-                    if (res.status === 200) {
+                    if (res.status === 201) {
                         toast.success('Рецепт доданий', toastOptions);
-                        navigate('/');
+                        navigate(`/${category}/${res.data.id}`);
                     }
                 })
                 .catch((err) => {

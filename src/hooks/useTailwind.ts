@@ -1,7 +1,7 @@
 // React
 import { useMemo } from 'react';
 
-// Third Party
+// secondary Party
 import resolveConfig from 'tailwindcss/resolveConfig';
 
 // Project

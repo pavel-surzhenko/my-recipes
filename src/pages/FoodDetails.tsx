@@ -98,7 +98,7 @@ const FoodDetails = () => {
                                         <div>
                                             <div className='space-y-3'>
                                                 <div>Інгрідієнти:</div>
-                                                <table className='min-w-full bg-third dark:bg-thirdDark shadow-md rounded-lg overflow-hidden'>
+                                                <table className='min-w-full bg-secondary dark:bg-secondaryDark shadow-md rounded-lg overflow-hidden'>
                                                     <thead>
                                                         <tr className='text-left border-secondary dark:border-secondaryDark border-b-2'>
                                                             <th className='px-5 py-3 w-2/3 font-medium border-secondary dark:border-secondaryDark border-r-2'>
