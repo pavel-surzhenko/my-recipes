@@ -5,22 +5,24 @@ import { toastOptions } from '../lib/toastOptions';
 import { useNavigate } from 'react-router-dom';
 import { TrashIcon } from '../assets';
 
-const ConfirmModal: React.FC<{ id: string }> = ({ id }) => {
+const ConfirmModal: React.FC<{ id: string; img: string[] }> = ({ id, img }) => {
     const [showModal, setShowModal] = React.useState(false);
     const navigate = useNavigate();
 
-    const handleDelete = (id: string) => {
-        api.delete
-            .food(id)
-            .then((res) => {
-                if (res.status === 204) {
-                    toast.success('Рецепт видалений', toastOptions);
-                    navigate('/');
-                }
-            })
-            .catch((err) => {
-                toast.error(`Упс, сталась помилка: ${err.message}`);
-            });
+    const handleDelete = async (id: string, img: string[]) => {
+        try {
+            await api.delete.food(id);
+            for (const image of img) {
+                const parts = image.split('/');
+
+                const id = parts[parts.length - 1];
+                await api.delete.image(id);
+            }
+            toast.success('Рецепт видалений', toastOptions);
+            navigate('/');
+        } catch (error) {
+            toast.error(`Упс, сталась помилка: ${error}`);
+        }
     };
     return (
         <>
@@ -54,7 +56,7 @@ const ConfirmModal: React.FC<{ id: string }> = ({ id }) => {
                                         className='btn-suc'
                                         type='button'
                                         onClick={() => {
-                                            handleDelete(id);
+                                            handleDelete(id, img);
                                             setShowModal(false);
                                         }}
                                     >

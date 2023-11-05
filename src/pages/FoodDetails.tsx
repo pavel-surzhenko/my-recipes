@@ -152,7 +152,12 @@ const FoodDetails = () => {
                                     >
                                         <span>Редагувати</span> <PencilIcon />
                                     </button>
-                                    <ConfirmModal id={id} />
+                                    {data.images && (
+                                        <ConfirmModal
+                                            id={id}
+                                            img={data.images}
+                                        />
+                                    )}
                                 </div>
                             </>
                         )}

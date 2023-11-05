@@ -195,7 +195,10 @@ const Form: React.FC<Partial<FoodCardProps>> = ({
                     </div>
                 )}
                 {images?.map((img) => (
-                    <div className='relative'>
+                    <div
+                        key={img}
+                        className='relative'
+                    >
                         <img
                             className='w-[100px] lg:w-[150px] h-[100px] lg:h-[150px] object-cover rounded-md'
                             src={img}
