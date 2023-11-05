@@ -6,3 +6,7 @@ export { AddIcon } from './AddIcon';
 export { DeleteIcon } from './DeleteIcon';
 export { SearchIcon } from './SearchIcon';
 export { BackIcon } from './BackIcon';
+export { TrashIcon } from './TrashIcon';
+export { TimeIcon } from './TimeIcon';
+export { ImageIcon } from './ImageIcon';
+export { PencilIcon } from './PencilIcon';

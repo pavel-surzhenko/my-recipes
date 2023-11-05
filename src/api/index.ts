@@ -1,8 +1,9 @@
-import { BASE_URL } from './options';
+import { BASE_URL, LOCAL_URL } from './options';
 import { FoodCardProps, foodCategory, postFoodProps } from '../types';
 import { fetchData } from '../hooks/fetchData';
 import { postData } from '../hooks/postData';
 import { deleteData } from '../hooks/deleteData';
+import { updateData } from '../hooks/updateData';
 
 export const api = {
     get: {
@@ -35,7 +36,7 @@ export const api = {
         },
 
         // async r(category: foodCategory): Promise<FoodCardProps> {
-        //     return fetchData<FoodCardProps>(`http://localhost:4000/random?category=${category}`);
+        //     return fetchData<FoodCardProps>(`http://localhost:4000/`);
         // },
     },
     post: {
@@ -49,8 +50,18 @@ export const api = {
     },
 
     delete: {
-        async image(img: string) {
-            return deleteData(`${BASE_URL}image?id=${img}`);
+        async image(id: string) {
+            return deleteData(`${BASE_URL}image/${id}`);
+        },
+
+        async food(id: string) {
+            return deleteData(`${BASE_URL}food/${id}`);
+        },
+    },
+
+    update: {
+        async food(id: string, data: postFoodProps) {
+            return updateData(`${BASE_URL}food`, { id, ...data });
         },
     },
 };

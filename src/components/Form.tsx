@@ -4,16 +4,28 @@ import { toast } from 'react-toastify';
 import { toastOptions } from '../lib/toastOptions';
 import { useNavigate } from 'react-router-dom';
 import { api } from '../api';
-import { IngredientsProps, foodCategory } from '../types';
+import { FoodCardProps, IngredientsProps, foodCategory } from '../types';
 import Skeleton from 'react-loading-skeleton';
 
-const Form = () => {
+const Form: React.FC<Partial<FoodCardProps>> = ({
+    _id,
+    images: existingImages,
+    name: existingName,
+    ingredients: existingIngredients,
+    instruction: existingInstruction,
+    category: existingCategory,
+    time: existingTime,
+}) => {
     const navigate = useNavigate();
-    const [instructionSteps, setInstructionSteps] = useState<string[]>(['']);
-    const [images, setImages] = useState<string[]>([]);
+
+    const [category, setCategory] = useState<foodCategory>(existingCategory || 'soups');
+    const [name, setName] = useState<string>(existingName || '');
+    const [images, setImages] = useState<string[]>(existingImages || []);
+    const [time, setTime] = useState<string>(existingTime || '');
+    const [ingredients, setIngredients] = useState<IngredientsProps[]>(existingIngredients || []);
+    const [instructionSteps, setInstructionSteps] = useState<string[]>(existingInstruction || ['']);
+
     const [isImageLoading, setIsImageLoading] = useState<boolean>(false);
-    const [ingredients, setIngredients] = useState<IngredientsProps[]>([]);
-    const [isAllFields, setIsAllFields] = useState<boolean>(true);
 
     const addStep = () => {
         setInstructionSteps([...instructionSteps, '']);
@@ -95,13 +107,26 @@ const Form = () => {
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
-        const formData = new FormData(e.currentTarget);
-        const category = formData.get('category') as foodCategory;
-        const name = formData.get('name') as string;
-        const time = formData.get('time') as string;
-
-        if (category && name && instructionSteps.length > 0 && ingredients.length > 0) {
-            setIsAllFields(true);
+        if (_id) {
+            api.update
+                .food(_id, {
+                    category,
+                    name,
+                    instruction: instructionSteps,
+                    time,
+                    ingredients,
+                    images,
+                })
+                .then((res) => {
+                    if (res.status === 200) {
+                        toast.success('Рецепт оновлено', toastOptions);
+                        navigate(`/${category}/${_id}`);
+                    }
+                })
+                .catch((err) => {
+                    toast.error(`Упс, сталась помилка: ${err.message}`);
+                });
+        } else {
             api.post
                 .food({ category, name, instruction: instructionSteps, time, ingredients, images })
                 .then((res) => {
@@ -113,8 +138,6 @@ const Form = () => {
                 .catch((err) => {
                     toast.error(`Упс, сталась помилка: ${err.message}`);
                 });
-        } else {
-            setIsAllFields(false);
         }
     };
 
@@ -127,6 +150,8 @@ const Form = () => {
                 Оберіть категорію <span className='text-red'>*</span>
             </label>
             <select
+                value={category}
+                onChange={(e) => setCategory(e.target.value as foodCategory)}
                 name='category'
                 className='input'
             >
@@ -143,6 +168,8 @@ const Form = () => {
                 type='text'
                 placeholder='Назва...'
                 className='input'
+                value={name}
+                onChange={(e) => setName(e.target.value)}
             />
             <label>Завантажити фото</label>
             <label
@@ -178,6 +205,7 @@ const Form = () => {
                         <button
                             className='absolute top-1 right-1 bg-secondary dark:bg-secondaryDark rounded-sm text-red cursor-pointer'
                             onClick={() => handleDeleteImage(img)}
+                            type='button'
                         >
                             <CloseIcon />
                         </button>
@@ -192,6 +220,8 @@ const Form = () => {
                 type='number'
                 placeholder='Хвилин...'
                 className='input w-1/3 md:w-1/4 xl:w-1/5'
+                value={time}
+                onChange={(e) => setTime(e.target.value)}
             />
             <label htmlFor='ingredients'>
                 Інгредієнти <span className='text-red'>*</span>
@@ -219,7 +249,7 @@ const Form = () => {
                     <select
                         value={ingredient.unit}
                         onChange={(e) => handleIngredientChange(index, 'unit', e.target.value)}
-                        className='select px-2'
+                        className='select text-center'
                     >
                         <option value='шт'>шт</option>
                         <option value='гр'>гр</option>
@@ -285,13 +315,8 @@ const Form = () => {
                 type='submit'
                 className='btn'
             >
-                Зберегти
+                {_id ? 'Оновити' : 'Зберегти'}
             </button>
-            {!isAllFields && (
-                <div>
-                    <span className='text-red'>*</span> Заповніть всі обовя'зкові поля{' '}
-                </div>
-            )}
         </form>
     );
 };

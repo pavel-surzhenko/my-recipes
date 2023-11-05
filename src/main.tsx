@@ -17,6 +17,7 @@ const Main = React.lazy(() => import('./pages/Main'));
 const Salads = React.lazy(() => import('./pages/Salads'));
 const Desserts = React.lazy(() => import('./pages/Desserts'));
 const FoodDetails = React.lazy(() => import('./pages/FoodDetails'));
+const EditRecipe = React.lazy(() => import('./pages/EditRecipe'));
 
 export const router = createBrowserRouter([
     {
@@ -25,6 +26,7 @@ export const router = createBrowserRouter([
         children: [
             { path: '/', element: <Home /> },
             { path: '/new-recipe', element: <NewRecipe /> },
+            { path: '/edit-recipe/:id', element: <EditRecipe /> },
             { path: '/soups', element: <Soups /> },
             { path: '/main', element: <Main /> },
             { path: '/salads', element: <Salads /> },

@@ -1,8 +1,7 @@
 import { Link } from 'react-router-dom';
-import { ImageIcon } from '../assets/ImageIcon';
+import { ImageIcon, TimeIcon } from '../assets';
 import { FoodCardProps } from '../types';
 import CategoryLabel from './CategoryLabel';
-import TimeIcon from '../assets/TimeIcon';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import 'react-lazy-load-image-component/src/effects/blur.css';
 

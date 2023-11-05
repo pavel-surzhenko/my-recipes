@@ -30,5 +30,4 @@ to do
 sort backend
 home page sort and filter all food
 slot machine animation ?
-add delete recipe
-add loading for random
+add delete image if delete recipe

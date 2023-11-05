@@ -26,10 +26,10 @@ select {
     @apply px-3 py-2 rounded-md bg-third dark:bg-thirdDark  focus:ring-primary dark:focus:ring-primaryDark border-2 border-primary/50 dark:border-primaryDark/50 focus:border-primary dark:focus:border-primaryDark  outline-none;
 }
 .select {
-    @apply pl-1 py-2 rounded-md bg-third dark:bg-thirdDark  focus:ring-primary dark:focus:ring-primaryDark border-2 border-primary/50 dark:border-primaryDark/50 focus:border-primary dark:focus:border-primaryDark  outline-none;
+    @apply p-2 rounded-md bg-third dark:bg-thirdDark  focus:ring-primary dark:focus:ring-primaryDark border-2 border-primary/50 dark:border-primaryDark/50 focus:border-primary dark:focus:border-primaryDark  outline-none;
 }
 .btn {
-    @apply px-3 py-2 bg-primary dark:bg-primaryDark rounded-md font-medium text-white hover:ring-2 ring-offset-primary ring-primary;
+    @apply px-3 py-2 bg-primary dark:bg-primaryDark rounded-md font-medium text-white hover:ring-2 ring-offset-primary dark:ring-offset-primaryDark ring-primary dark:ring-primaryDark;
 }
 .btn-del {
     @apply px-3 py-2 bg-red rounded-md font-medium text-white hover:ring-2 ring-offset-red ring-red;
