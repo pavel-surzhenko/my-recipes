@@ -10,6 +10,7 @@ import CategoryLabel from '../components/CategoryLabel';
 import SkeletonDetailsPage from '../components/Skeleton/SkeletonDetailsPage';
 import { ImageIcon, TrashIcon, TimeIcon, PencilIcon } from '../assets';
 import { toastOptions } from '../lib/toastOptions';
+import ConfirmModal from '../components/ConfirmModal';
 
 const FoodDetails = () => {
     const { id, foodType } = useParams<{ id: string; foodType: foodCategory }>();
@@ -40,7 +41,10 @@ const FoodDetails = () => {
                 .then((res) => {
                     setData(res);
                 })
-                .catch((err) => toast.error(`Упс, сталась помилка: ${err.message}`))
+                .catch((err) => {
+                    toast.error(`Упс, сталась помилка: ${err.message}`);
+                    navigate('/');
+                })
                 .finally(() => setLoading(false));
             if (foodType) {
                 api.get[foodType]()
@@ -49,6 +53,7 @@ const FoodDetails = () => {
             }
         }
         window.scrollTo(0, 0);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [id, foodType]);
 
     return (
@@ -58,7 +63,7 @@ const FoodDetails = () => {
                     <SkeletonDetailsPage />
                 ) : (
                     <>
-                        {data && (
+                        {data && id && (
                             <>
                                 <div className='flex  mb-5 smd:space-x-5'>
                                     <div className='w-[425px] hidden smd:block rounded-md overflow-hidden'>
@@ -155,19 +160,14 @@ const FoodDetails = () => {
                                         </div>
                                     ))}
                                 </div>
-                                <div className='flex justify-end items-center py-5 border-b border-secondary dark:border-secondaryDark space-x-5'>
+                                <div className='flex justify-end items-center py-5 border-b border-secondary dark:border-secondaryDark'>
                                     <button
-                                        className='btn flex space-x-2'
+                                        className='btn flex space-x-2 mr-5'
                                         onClick={() => navigate(`/edit-recipe/${data._id}`)}
                                     >
                                         <span>Редагувати</span> <PencilIcon />
                                     </button>
-                                    <button
-                                        className='btn-del flex space-x-2'
-                                        onClick={() => handleDelete(data._id)}
-                                    >
-                                        <span>Видалити</span> <TrashIcon />
-                                    </button>
+                                    <ConfirmModal id={id} />
                                 </div>
                             </>
                         )}
