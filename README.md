@@ -27,9 +27,9 @@ If you are developing a production application, we recommend updating the config
 -   Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
 
 to do
-sort backend
-home page sort and filter all food
 slot machine animation ?
 add valiadtion to form
 add search
 add hover title img
+add pagination
+add slider for img

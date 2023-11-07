@@ -51,12 +51,12 @@ const FoodDetails = () => {
                         {data && id && (
                             <>
                                 <div className='flex  mb-5 smd:space-x-5'>
-                                    <div className='w-[425px] hidden smd:block rounded-md overflow-hidden'>
+                                    <div className='w-[425px] max-h-[500px] hidden smd:block rounded-md overflow-hidden'>
                                         {data?.images?.length ? (
                                             <img
                                                 src={data.images[0]}
                                                 alt={data.name}
-                                                className='w-full object-contain'
+                                                className='w-full h-full object-contain'
                                             />
                                         ) : (
                                             <ImageIcon />
@@ -64,12 +64,12 @@ const FoodDetails = () => {
                                     </div>
                                     <div className='grow space-y-5'>
                                         <div className='smd:hidden flex justify-center'>
-                                            <div className='w-[min(100%,700px)] rounded-md overflow-hidden'>
+                                            <div className='w-[min(100%,700px)] max-h-[400px] rounded-md overflow-hidden'>
                                                 {data?.images?.length ? (
                                                     <img
                                                         src={data.images[0]}
                                                         alt={data.name}
-                                                        className='w-full object-contain'
+                                                        className='w-full h-full object-cover'
                                                     />
                                                 ) : (
                                                     <ImageIcon />
@@ -173,14 +173,14 @@ const FoodDetails = () => {
                                     <div
                                         className={`${
                                             similarFood.length > 4 ? 'overflow-x-scroll' : ''
-                                        } flex space-x-5 `}
+                                        } flex space-x-5`}
                                     >
                                         {similarFood?.map(
                                             (food) =>
                                                 food._id !== data?._id && (
                                                     <div
                                                         key={food._id}
-                                                        className='w-[250px]'
+                                                        className='w-[250px] flex-1 mb-4'
                                                     >
                                                         <FoodCard {...food} />
                                                     </div>

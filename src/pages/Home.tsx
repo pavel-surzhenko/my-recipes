@@ -9,6 +9,9 @@ import SkeletonCard from '../components/Skeleton/SkeletonCard';
 import Sort from '../components/Sort';
 import FoodGrid from '../components/FoodGrid';
 import SkeletonGrid from '../components/Skeleton/SkeletonGrid';
+import ReactPaginate from 'react-paginate';
+import { LeftArrowLong } from '../assets/LeftArrowLong';
+import { RightArrowLong } from '../assets/RightArrowLong';
 
 const Home = () => {
     const [randomFood, setRandomFood] = useState<FoodCardProps>();
@@ -16,6 +19,8 @@ const Home = () => {
     const [randomLoading, setRandomLoading] = useState(false);
     const [foodLoading, setFoodLoading] = useState(false);
     const [sorting, setSorting] = useState('date_desc');
+    const [page, setPage] = useState<number>(1);
+    const [countPages, setCountPages] = useState<number>(1);
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         setRandomLoading(true);
@@ -40,11 +45,14 @@ const Home = () => {
     useEffect(() => {
         setFoodLoading(true);
         api.get
-            .allFood(sorting)
-            .then((res) => setAllFood(res))
+            .allFood(sorting, page)
+            .then((res) => {
+                setAllFood(res.data);
+                setCountPages(res.totalPages);
+            })
             .catch((err) => toast.error(`Упс, сталась помилка: ${err.message}`))
             .finally(() => setFoodLoading(false));
-    }, [sorting]);
+    }, [sorting, page]);
 
     return (
         <section className='page'>
@@ -108,6 +116,25 @@ const Home = () => {
                     setSorting={handleSortingChange}
                 />
                 {foodLoading ? <SkeletonGrid /> : <>{allFood && <FoodGrid data={allFood} />}</>}
+                <ReactPaginate
+                    breakLabel={`... `}
+                    nextLabel={<RightArrowLong />}
+                    onPageChange={(e) => {
+                        setPage(e.selected + 1);
+                    }}
+                    forcePage={page - 1}
+                    pageRangeDisplayed={2}
+                    marginPagesDisplayed={3}
+                    pageCount={countPages}
+                    previousLabel={<LeftArrowLong />}
+                    renderOnZeroPageCount={null}
+                    containerClassName='flex text-xl items-center justify-center my-5'
+                    pageClassName='mr-3'
+                    breakClassName='mr-3'
+                    activeLinkClassName='font-semibold bg-secondary dark:bg-secondaryDark px-2 py-1 rounded-lg'
+                    disabledLinkClassName='hidden'
+                    previousClassName='mr-3'
+                />
             </Container>
         </section>
     );
