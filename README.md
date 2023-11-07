@@ -31,3 +31,5 @@ sort backend
 home page sort and filter all food
 slot machine animation ?
 add valiadtion to form
+add search
+add hover title img

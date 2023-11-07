@@ -7,24 +7,24 @@ import { updateData } from '../hooks/updateData';
 
 export const api = {
     get: {
-        async allFood(): Promise<FoodCardProps[]> {
-            return fetchData<FoodCardProps[]>(`${BASE_URL}food`);
+        async allFood(sorting: string): Promise<FoodCardProps[]> {
+            return fetchData<FoodCardProps[]>(`${BASE_URL}food?sort=${sorting}`);
         },
 
-        async main(): Promise<FoodCardProps[]> {
-            return fetchData<FoodCardProps[]>(`${BASE_URL}main`);
+        async main(sorting: string): Promise<FoodCardProps[]> {
+            return fetchData<FoodCardProps[]>(`${BASE_URL}main?sort=${sorting}`);
         },
 
-        async soups(): Promise<FoodCardProps[]> {
-            return fetchData<FoodCardProps[]>(`${BASE_URL}soups`);
+        async soups(sorting: string): Promise<FoodCardProps[]> {
+            return fetchData<FoodCardProps[]>(`${BASE_URL}soups?sort=${sorting}`);
         },
 
-        async salads(): Promise<FoodCardProps[]> {
-            return fetchData<FoodCardProps[]>(`${BASE_URL}salads`);
+        async salads(sorting: string): Promise<FoodCardProps[]> {
+            return fetchData<FoodCardProps[]>(`${BASE_URL}salads?sort=${sorting}`);
         },
 
-        async desserts(): Promise<FoodCardProps[]> {
-            return fetchData<FoodCardProps[]>(`${BASE_URL}desserts`);
+        async desserts(sorting: string): Promise<FoodCardProps[]> {
+            return fetchData<FoodCardProps[]>(`${BASE_URL}desserts?sort=${sorting}`);
         },
 
         async byId(id: string): Promise<FoodCardProps> {

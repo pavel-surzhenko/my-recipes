@@ -6,23 +6,33 @@ import NewRecipeBtn from '../components/NewRecipeBtn';
 import { toast } from 'react-toastify';
 import { api } from '../api';
 import SkeletonGrid from '../components/Skeleton/SkeletonGrid';
+import Sort from '../components/Sort';
 
 const Desserts = () => {
     const [data, setData] = useState<FoodCardProps[]>();
     const [loading, setLoading] = useState(false);
+    const [sorting, setSorting] = useState('date_desc');
+
+    const handleSortingChange = (value: string) => {
+        setSorting(value);
+    };
 
     useEffect(() => {
         setLoading(true);
         api.get
-            .desserts()
+            .desserts(sorting)
             .then((res) => setData(res))
             .catch((err) => toast.error(`Упс, сталась помилка: ${err.message}`))
             .finally(() => setLoading(false));
-    }, []);
+    }, [sorting]);
     return (
         <section className='page'>
             <Container>
                 <NewRecipeBtn />
+                <Sort
+                    sorting={sorting}
+                    setSorting={handleSortingChange}
+                />
                 {loading ? <SkeletonGrid /> : <>{data && <FoodGrid data={data} />}</>}
             </Container>
         </section>

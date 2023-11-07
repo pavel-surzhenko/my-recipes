@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Container from '../components/Container';
 import { FoodCardProps, foodCategory } from '../types';
 import NewRecipeBtn from '../components/NewRecipeBtn';
@@ -6,10 +6,16 @@ import { api } from '../api';
 import { toast } from 'react-toastify';
 import FoodCard from '../components/FoodCard';
 import SkeletonCard from '../components/Skeleton/SkeletonCard';
+import Sort from '../components/Sort';
+import FoodGrid from '../components/FoodGrid';
+import SkeletonGrid from '../components/Skeleton/SkeletonGrid';
 
 const Home = () => {
-    const [data, setData] = useState<FoodCardProps>();
+    const [randomFood, setRandomFood] = useState<FoodCardProps>();
+    const [allFood, setAllFood] = useState<FoodCardProps[]>();
     const [randomLoading, setRandomLoading] = useState(false);
+    const [foodLoading, setFoodLoading] = useState(false);
+    const [sorting, setSorting] = useState('date_desc');
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         setRandomLoading(true);
@@ -21,11 +27,24 @@ const Home = () => {
         if (category) {
             api.get
                 .random(category)
-                .then((res) => setData(res))
+                .then((res) => setRandomFood(res))
                 .catch((err) => toast.error(`Упс, сталась помилка: ${err.message}`))
                 .finally(() => setRandomLoading(false));
         }
     };
+
+    const handleSortingChange = (value: string) => {
+        setSorting(value);
+    };
+
+    useEffect(() => {
+        setFoodLoading(true);
+        api.get
+            .allFood(sorting)
+            .then((res) => setAllFood(res))
+            .catch((err) => toast.error(`Упс, сталась помилка: ${err.message}`))
+            .finally(() => setFoodLoading(false));
+    }, [sorting]);
 
     return (
         <section className='page'>
@@ -71,8 +90,8 @@ const Home = () => {
                                 <SkeletonCard />
                             ) : (
                                 <>
-                                    {data ? (
-                                        <FoodCard {...data} />
+                                    {randomFood ? (
+                                        <FoodCard {...randomFood} />
                                     ) : (
                                         <div className='bg-secondary dark:bg-secondaryDark rounded-md h-[308px] lg:h-[333px] py-10 px-5 space-y-5 opacity-50'>
                                             <div className='text-center text-9xl'>?</div>
@@ -84,6 +103,11 @@ const Home = () => {
                         </div>
                     </div>
                 </div>
+                <Sort
+                    sorting={sorting}
+                    setSorting={handleSortingChange}
+                />
+                {foodLoading ? <SkeletonGrid /> : <>{allFood && <FoodGrid data={allFood} />}</>}
             </Container>
         </section>
     );
