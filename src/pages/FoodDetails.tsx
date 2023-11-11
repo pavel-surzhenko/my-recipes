@@ -1,20 +1,19 @@
 import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { api } from '../api';
-import { FoodCardProps } from '../types';
 import Container from '../components/Container';
-import { foodCategory } from '../types/foodCardProps';
 import { toast } from 'react-toastify';
 import FoodCard from '../components/FoodCard';
 import CategoryLabel from '../components/CategoryLabel';
 import SkeletonDetailsPage from '../components/Skeleton/SkeletonDetailsPage';
 import { ImageIcon, TimeIcon, PencilIcon } from '../assets';
 import ConfirmModal from '../components/ConfirmModal';
+import { foodCardProps, foodCategory } from '../types/foodCardProps';
 
 const FoodDetails = () => {
     const { id, foodType } = useParams<{ id: string; foodType: foodCategory }>();
-    const [data, setData] = useState<FoodCardProps | null>(null);
-    const [similarFood, setSimilarFood] = useState<FoodCardProps[] | null>(null);
+    const [data, setData] = useState<foodCardProps | null>(null);
+    const [similarFood, setSimilarFood] = useState<foodCardProps[] | null>(null);
     const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
 
@@ -33,7 +32,7 @@ const FoodDetails = () => {
                 .finally(() => setLoading(false));
             if (foodType) {
                 api.get[foodType]()
-                    .then((res) => setSimilarFood(res))
+                    .then((res) => setSimilarFood(res.data))
                     .catch((err) => toast.error(`Упс, сталась помилка: ${err.message}`));
             }
         }
