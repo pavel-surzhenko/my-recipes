@@ -4,8 +4,9 @@ import { toast } from 'react-toastify';
 import { toastOptions } from '../lib/toastOptions';
 import { useNavigate } from 'react-router-dom';
 import { api } from '../api';
-import { foodCardProps, IngredientsProps, foodCategory } from '../types';
+import { foodCardProps, formProps } from '../types';
 import Skeleton from 'react-loading-skeleton';
+import { SubmitHandler, useForm } from 'react-hook-form';
 
 const Form: React.FC<Partial<foodCardProps>> = ({
     _id,
@@ -18,53 +19,70 @@ const Form: React.FC<Partial<foodCardProps>> = ({
 }) => {
     const navigate = useNavigate();
 
-    const [category, setCategory] = useState<foodCategory>(existingCategory || 'soups');
-    const [name, setName] = useState<string>(existingName || '');
     const [images, setImages] = useState<string[]>(existingImages || []);
-    const [time, setTime] = useState<string>(existingTime || '');
-    const [ingredients, setIngredients] = useState<IngredientsProps[]>(existingIngredients || []);
-    const [instructionSteps, setInstructionSteps] = useState<string[]>(existingInstruction || ['']);
-
     const [isImageLoading, setIsImageLoading] = useState<boolean>(false);
 
+    const { register, handleSubmit, setValue, watch } = useForm<formProps>({
+        defaultValues: async () => ({
+            category: existingCategory || 'soups',
+            name: existingName || '',
+            images: existingImages || [],
+            time: existingTime || '',
+            ingredients: existingIngredients || [],
+            instruction: existingInstruction || [],
+        }),
+    });
+
+    const category = watch('category');
+    const ingredients = watch('ingredients');
+    const instructionSteps = watch('instruction');
+
+    const onSubmit: SubmitHandler<formProps> = (data) => {
+        if (_id) {
+            api.update
+                .food(_id, data)
+                .then((res) => {
+                    if (res.status === 200) {
+                        toast.success('Рецепт оновлено', toastOptions);
+                        navigate(`/${category}/${_id}`);
+                    }
+                })
+                .catch((err) => {
+                    toast.error(`Упс, сталась помилка: ${err.message}`);
+                });
+        } else {
+            api.post
+                .food(data)
+                .then((res) => {
+                    if (res.status === 201) {
+                        toast.success('Рецепт доданий', toastOptions);
+                        navigate(`/${category}/${res.data.id}`);
+                    }
+                })
+                .catch((err) => {
+                    toast.error(`Упс, сталась помилка: ${err.message}`);
+                });
+        }
+    };
+
     const addStep = () => {
-        setInstructionSteps([...instructionSteps, '']);
+        setValue('instruction', [...instructionSteps, '']);
     };
 
     const removeLastStep = () => {
         if (instructionSteps.length > 1) {
-            const updatedSteps = [...instructionSteps];
-            updatedSteps.pop();
-            setInstructionSteps(updatedSteps);
+            setValue('instruction', instructionSteps.slice(0, -1));
         }
     };
 
-    const handleStepChange = (index: number, value: string) => {
-        const updatedSteps = [...instructionSteps];
-        updatedSteps[index] = value;
-        setInstructionSteps(updatedSteps);
-    };
-
     const addIngredient = () => {
-        setIngredients([...ingredients, { name: '', quantity: '', unit: 'шт' }]);
+        setValue('ingredients', [...ingredients, { name: '', quantity: '', unit: 'шт' }]);
     };
 
     const removeIngredient = () => {
         if (ingredients.length > 1) {
-            const updatedIngredients = [...ingredients];
-            updatedIngredients.pop();
-            setIngredients(updatedIngredients);
+            setValue('ingredients', ingredients.slice(0, -1));
         }
-    };
-
-    const handleIngredientChange = (
-        index: number,
-        field: keyof IngredientsProps,
-        value: string
-    ) => {
-        const updatedIngredients = [...ingredients];
-        updatedIngredients[index][field] = value;
-        setIngredients(updatedIngredients);
     };
 
     const validFiles = ['image/jpg', 'image/jpeg', 'image/png'];
@@ -84,7 +102,10 @@ const Form: React.FC<Partial<foodCardProps>> = ({
 
         await api.post
             .image(form)
-            .then((res) => setImages([res.data.link, ...images]))
+            .then((res) => {
+                setImages([res.data.link, ...images]);
+                setValue('images', [res.data.link, ...images]);
+            })
             .catch((error) => {
                 toast.error(`Упс, сталась помилка ${error.message}`, toastOptions);
             })
@@ -98,61 +119,28 @@ const Form: React.FC<Partial<foodCardProps>> = ({
 
         await api.delete
             .image(id)
-            .then(() => setImages(images.filter((img) => img !== image)))
+            .then(() => {
+                setImages(images.filter((img) => img !== image));
+                setValue(
+                    'images',
+                    images.filter((img) => img !== image)
+                );
+            })
             .catch((error) => {
                 toast.error(`Упс, сталась помилка ${error.message}`, toastOptions);
             });
     };
 
-    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-        e.preventDefault();
-
-        if (_id) {
-            api.update
-                .food(_id, {
-                    category,
-                    name,
-                    instruction: instructionSteps,
-                    time,
-                    ingredients,
-                    images,
-                })
-                .then((res) => {
-                    if (res.status === 200) {
-                        toast.success('Рецепт оновлено', toastOptions);
-                        navigate(`/${category}/${_id}`);
-                    }
-                })
-                .catch((err) => {
-                    toast.error(`Упс, сталась помилка: ${err.message}`);
-                });
-        } else {
-            api.post
-                .food({ category, name, instruction: instructionSteps, time, ingredients, images })
-                .then((res) => {
-                    if (res.status === 201) {
-                        toast.success('Рецепт доданий', toastOptions);
-                        navigate(`/${category}/${res.data.id}`);
-                    }
-                })
-                .catch((err) => {
-                    toast.error(`Упс, сталась помилка: ${err.message}`);
-                });
-        }
-    };
-
     return (
         <form
-            onSubmit={handleSubmit}
+            onSubmit={handleSubmit(onSubmit)}
             className='flex flex-col p-5 bg-secondary dark:bg-secondaryDark space-y-3 m-5 w-[min(100%,700px)] mx-auto'
         >
             <label htmlFor='category'>
                 Оберіть категорію <span className='text-red'>*</span>
             </label>
             <select
-                value={category}
-                onChange={(e) => setCategory(e.target.value as foodCategory)}
-                name='category'
+                {...register('category')}
                 className='input'
             >
                 <option value='soups'>Супи</option>
@@ -164,12 +152,9 @@ const Form: React.FC<Partial<foodCardProps>> = ({
                 Назва <span className='text-red'>*</span>
             </label>
             <input
-                name='name'
-                type='text'
                 placeholder='Назва...'
                 className='input'
-                value={name}
-                onChange={(e) => setName(e.target.value)}
+                {...register('name')}
             />
             <label>Завантажити фото</label>
             <label
@@ -180,7 +165,6 @@ const Form: React.FC<Partial<foodCardProps>> = ({
             </label>
             <input
                 id='image'
-                name='image'
                 type='file'
                 onChange={handleFileChange}
                 className='hidden'
@@ -219,47 +203,41 @@ const Form: React.FC<Partial<foodCardProps>> = ({
                 Час приготування (хв) <span className='text-red'>*</span>
             </label>
             <input
-                name='time'
                 type='number'
                 placeholder='Хвилин...'
                 className='input w-1/3 md:w-1/4 xl:w-1/5'
-                value={time}
-                onChange={(e) => setTime(e.target.value)}
+                {...register('time')}
             />
             <label htmlFor='ingredients'>
                 Інгредієнти <span className='text-red'>*</span>
             </label>
-            {ingredients.map((ingredient, index) => (
+            {ingredients?.map((_, index) => (
                 <div
                     key={index}
                     className='space-x-2 sm:space-x-3 flex'
                 >
                     <input
-                        name='ingredients'
+                        {...register(`ingredients.${index}.name`)}
                         type='text'
                         placeholder='Назва інгредієнту...'
-                        value={ingredient.name}
-                        onChange={(e) => handleIngredientChange(index, 'name', e.target.value)}
                         className='input w-full'
                     />
                     <input
                         type='number'
                         placeholder='Кількість...'
-                        value={ingredient.quantity}
-                        onChange={(e) => handleIngredientChange(index, 'quantity', e.target.value)}
                         className='input w-full basis-1/3'
+                        {...register(`ingredients.${index}.quantity`)}
                     />
                     <select
-                        value={ingredient.unit}
-                        onChange={(e) => handleIngredientChange(index, 'unit', e.target.value)}
                         className='select text-center'
+                        {...register(`ingredients.${index}.unit`)}
                     >
                         <option value='шт'>шт</option>
                         <option value='гр'>гр</option>
                     </select>
                 </div>
             ))}
-            {ingredients.length > 1 && (
+            {ingredients?.length > 1 && (
                 <button
                     type='button'
                     onClick={removeIngredient}
@@ -278,7 +256,7 @@ const Form: React.FC<Partial<foodCardProps>> = ({
                 <span>Додати Інгредієнт</span>
             </button>
 
-            {instructionSteps.map((step, index) => (
+            {instructionSteps?.map((_, index) => (
                 <div
                     key={index}
                     className='flex flex-col space-y-3'
@@ -287,16 +265,14 @@ const Form: React.FC<Partial<foodCardProps>> = ({
                         Крок<span className='text-red'>*</span> {index + 1}
                     </label>
                     <textarea
-                        name={`instruction-${index + 1}`}
                         rows={3}
                         placeholder='Інструкція...'
-                        value={step}
-                        onChange={(e) => handleStepChange(index, e.target.value)}
                         className='input'
+                        {...register(`instruction.${index}`)}
                     />
                 </div>
             ))}
-            {instructionSteps.length > 1 && (
+            {instructionSteps?.length > 1 && (
                 <button
                     type='button'
                     onClick={removeLastStep}
@@ -312,7 +288,7 @@ const Form: React.FC<Partial<foodCardProps>> = ({
                 onClick={addStep}
             >
                 <AddIcon />
-                <span>Наступний крок</span>
+                <span>Додати крок</span>
             </button>
             <button
                 type='submit'

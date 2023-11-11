@@ -113,8 +113,8 @@ const FoodDetails = () => {
                                         <h1 className='text-center text-xl font-semibold'>
                                             {data?.name}
                                         </h1>
-                                        <div className='flex space-x-3 justify-between'>
-                                            <div className='flex space-x-2 items-center whitespace-nowrap'>
+                                        <div className='flex space-x-3 justify-between flex-wrap items-center'>
+                                            <div className='flex  space-x-2 items-center whitespace-nowrap'>
                                                 <TimeIcon />{' '}
                                                 <p className='hidden xs:block'>
                                                     Час приготування:{' '}
@@ -125,7 +125,7 @@ const FoodDetails = () => {
                                             </div>
 
                                             <div className='flex space-x-2 items-center'>
-                                                <p className='hidden xs:block'>Категорія:</p>{' '}
+                                                <p className='hidden xs:block '>Категорія:</p>{' '}
                                                 <CategoryLabel category={data.category} />
                                             </div>
                                         </div>
@@ -205,8 +205,10 @@ const FoodDetails = () => {
                                     }`}
                                 >
                                     <div
-                                        className={`${
-                                            similarFood.length > 4 ? 'overflow-x-scroll' : ''
+                                        className={`overflow-x-scroll md:${
+                                            similarFood.length > 4
+                                                ? 'overflow-x-scroll'
+                                                : 'overflow-x-auto'
                                         } flex space-x-5`}
                                     >
                                         {similarFood?.map(
