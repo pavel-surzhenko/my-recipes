@@ -1,4 +1,4 @@
-import { foodCategory } from '../types/foodCardProps';
+import { foodCategory } from '../types/foodCardProps_old';
 
 const categoryUA = {
     soups: 'Супи',

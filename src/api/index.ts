@@ -1,5 +1,5 @@
 import { BASE_URL } from './options';
-import { foodCardProps, foodCategory, postFoodProps, foodResponse } from '../types';
+import { foodCardProps_old, foodCategory, postFoodProps, foodResponse } from '../types';
 import { fetchData } from '../hooks/fetchData';
 import { postData } from '../hooks/postData';
 import { deleteData } from '../hooks/deleteData';
@@ -27,12 +27,12 @@ export const api = {
             return fetchData<foodResponse>(`${BASE_URL}desserts?sort=${sorting}&page=${page}`);
         },
 
-        async byId(id: string): Promise<foodCardProps> {
-            return fetchData<foodCardProps>(`${BASE_URL}food/${id}`);
+        async byId(id: string): Promise<foodCardProps_old> {
+            return fetchData<foodCardProps_old>(`${BASE_URL}food/${id}`);
         },
 
-        async random(category: foodCategory): Promise<foodCardProps> {
-            return fetchData<foodCardProps>(`${BASE_URL}random?category=${category}`);
+        async random(category: foodCategory): Promise<foodCardProps_old> {
+            return fetchData<foodCardProps_old>(`${BASE_URL}random?category=${category}`);
         },
     },
     post: {

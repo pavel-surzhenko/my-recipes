@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { foodCardProps } from '../types';
+import { foodCardProps_old } from '../types';
 import Container from '../components/Container';
 import FoodGrid from '../components/FoodGrid';
 import NewRecipeBtn from '../components/NewRecipeBtn';
@@ -12,7 +12,7 @@ import { LeftArrowLong } from '../assets/LeftArrowLong';
 import { RightArrowLong } from '../assets/RightArrowLong';
 
 const Main = () => {
-    const [data, setData] = useState<foodCardProps[]>();
+    const [data, setData] = useState<foodCardProps_old[]>();
     const [loading, setLoading] = useState(false);
     const [sorting, setSorting] = useState('date_desc');
     const [page, setPage] = useState<number>(1);
