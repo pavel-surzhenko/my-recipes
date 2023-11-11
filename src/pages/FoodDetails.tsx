@@ -15,6 +15,8 @@ const FoodDetails = () => {
     const [data, setData] = useState<foodCardProps | null>(null);
     const [similarFood, setSimilarFood] = useState<foodCardProps[] | null>(null);
     const [loading, setLoading] = useState(false);
+    const [activeImage, setActiveImage] = useState<string | null>(null);
+
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -24,6 +26,7 @@ const FoodDetails = () => {
                 .byId(id)
                 .then((res) => {
                     setData(res);
+                    res.images?.length ? setActiveImage(res.images[0]) : setActiveImage(null);
                 })
                 .catch((err) => {
                     toast.error(`Упс, сталась помилка: ${err.message}`);
@@ -49,24 +52,41 @@ const FoodDetails = () => {
                     <>
                         {data && id && (
                             <>
-                                <div className='flex  mb-5 smd:space-x-5'>
-                                    <div className='w-[425px] max-h-[500px] hidden smd:block rounded-md overflow-hidden'>
-                                        {data?.images?.length ? (
-                                            <img
-                                                src={data.images[0]}
-                                                alt={data.name}
-                                                className='w-full h-full object-contain'
-                                            />
-                                        ) : (
-                                            <ImageIcon />
+                                <div className='flex flex-col smd:flex-row mb-5 smd:space-x-5'>
+                                    <div className='hidden smd:block'>
+                                        <div className='w-[425px] smd:max-lg:w-[400px] h-[300px]  rounded-md overflow-hidden '>
+                                            {activeImage ? (
+                                                <img
+                                                    src={activeImage}
+                                                    alt={data.name}
+                                                    className='w-full h-full object-cover'
+                                                />
+                                            ) : (
+                                                <ImageIcon />
+                                            )}
+                                        </div>
+                                        {data.images && data.images.length > 1 && (
+                                            <div className='flex pt-5 space-x-3'>
+                                                {data.images?.map((img) => (
+                                                    <img
+                                                        key={img}
+                                                        src={img}
+                                                        alt={data.name}
+                                                        className={`w-[100px] h-[100px] object-cover cursor-pointer rounded-md ${
+                                                            activeImage === img ? 'opacity-50' : ''
+                                                        }`}
+                                                        onClick={() => setActiveImage(img)}
+                                                    />
+                                                ))}
+                                            </div>
                                         )}
                                     </div>
                                     <div className='grow space-y-5'>
                                         <div className='smd:hidden flex justify-center'>
-                                            <div className='w-[min(100%,700px)] max-h-[400px] rounded-md overflow-hidden'>
-                                                {data?.images?.length ? (
+                                            <div className='w-[min(100%,700px)] h-[250px] xs:h-[300px] sm:h-[350px] md:h-[400px] rounded-md overflow-hidden'>
+                                                {activeImage ? (
                                                     <img
-                                                        src={data.images[0]}
+                                                        src={activeImage}
                                                         alt={data.name}
                                                         className='w-full h-full object-cover'
                                                     />
@@ -75,6 +95,21 @@ const FoodDetails = () => {
                                                 )}
                                             </div>
                                         </div>
+                                        {data.images && data.images.length > 1 && (
+                                            <div className='smd:hidden flex space-x-3'>
+                                                {data.images?.map((img) => (
+                                                    <img
+                                                        key={img}
+                                                        src={img}
+                                                        alt={data.name}
+                                                        className={`w-[75px] h-[75px] object-cover cursor-pointer rounded-md ${
+                                                            activeImage === img ? 'opacity-50' : ''
+                                                        }`}
+                                                        onClick={() => setActiveImage(img)}
+                                                    />
+                                                ))}
+                                            </div>
+                                        )}
                                         <h1 className='text-center text-xl font-semibold'>
                                             {data?.name}
                                         </h1>

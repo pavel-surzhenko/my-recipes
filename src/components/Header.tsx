@@ -1,18 +1,22 @@
 import { NavLink } from 'react-router-dom';
 import Container from './Container';
 import { CloseIcon, MenuIcon, MoonIcon, SearchIcon, SunIcon } from '../assets';
-import { useContext, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { ThemeContext } from '../lib/context';
 
 const Header = () => {
     const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
     const { isThemeDark, handleThemeChange } = useContext(ThemeContext);
 
-    if (isMenuOpen) {
-        document.body.style.overflow = 'hidden';
-    } else {
-        document.body.style.overflow = '';
-    }
+    useEffect(() => {
+        if (isMenuOpen) {
+            document.body.style.overflow = 'hidden';
+            document.documentElement.style.overflow = 'hidden';
+        } else {
+            document.body.style.overflow = '';
+            document.documentElement.style.overflow = '';
+        }
+    }, [isMenuOpen]);
 
     return (
         <header className='bg-primary py-5 text-lg text-white dark:bg-primaryDark'>
