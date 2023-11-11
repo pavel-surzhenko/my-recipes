@@ -2,14 +2,14 @@ import { useParams } from 'react-router-dom';
 import Container from '../components/Container';
 import Form from '../components/Form';
 import { api } from '../api';
-import { foodCardProps_old } from '../types';
+import { foodCardProps } from '../types';
 import { useState, useEffect } from 'react';
 import { toast } from 'react-toastify';
 import SkeletonForm from '../components/Skeleton/SkeletonForm';
 
 const EditRecipe = () => {
     const { id } = useParams<{ id: string }>();
-    const [data, setData] = useState<foodCardProps_old | null>(null);
+    const [data, setData] = useState<foodCardProps | null>(null);
     const [loading, setLoading] = useState<boolean>(false);
 
     useEffect(() => {

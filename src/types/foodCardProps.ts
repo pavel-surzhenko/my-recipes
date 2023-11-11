@@ -1,6 +1,6 @@
 import { IngredientsProps } from '.';
 
-export type foodCardProps_old = {
+export type foodCardProps = {
     _id: string;
     images?: string[];
     name: string;

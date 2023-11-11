@@ -8,12 +8,12 @@ import CategoryLabel from '../components/CategoryLabel';
 import SkeletonDetailsPage from '../components/Skeleton/SkeletonDetailsPage';
 import { ImageIcon, TimeIcon, PencilIcon } from '../assets';
 import ConfirmModal from '../components/ConfirmModal';
-import { foodCardProps_old, foodCategory } from '../types/foodCardProps_old';
+import { foodCardProps, foodCategory } from '../types/foodCardProps';
 
 const FoodDetails = () => {
     const { id, foodType } = useParams<{ id: string; foodType: foodCategory }>();
-    const [data, setData] = useState<foodCardProps_old | null>(null);
-    const [similarFood, setSimilarFood] = useState<foodCardProps_old[] | null>(null);
+    const [data, setData] = useState<foodCardProps | null>(null);
+    const [similarFood, setSimilarFood] = useState<foodCardProps[] | null>(null);
     const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
 

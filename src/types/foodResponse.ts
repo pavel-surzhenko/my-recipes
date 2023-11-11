@@ -1,7 +1,7 @@
-import { foodCardProps_old } from '.';
+import { foodCardProps } from '.';
 
 export type foodResponse = {
-    data: foodCardProps_old[];
+    data: foodCardProps[];
     page: number;
     totalPages: number;
 };
