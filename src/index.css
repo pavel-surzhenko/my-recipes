@@ -7,6 +7,8 @@
     html {
         font-family: 'Montserrat Alternates', sans-serif;
         min-height: 100vh;
+        margin-right: calc(-1 * (100vw - 100%));
+        overflow-x: hidden;
     }
     body {
         @apply flex flex-col min-h-screen bg-primary dark:bg-primaryDark;

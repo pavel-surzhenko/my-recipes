@@ -116,25 +116,27 @@ const Home = () => {
                     setSorting={handleSortingChange}
                 />
                 {foodLoading ? <SkeletonGrid /> : <>{allFood && <FoodGrid data={allFood} />}</>}
-                <ReactPaginate
-                    breakLabel={`... `}
-                    nextLabel={<RightArrowLong />}
-                    onPageChange={(e) => {
-                        setPage(e.selected + 1);
-                    }}
-                    forcePage={page - 1}
-                    pageRangeDisplayed={2}
-                    marginPagesDisplayed={3}
-                    pageCount={countPages}
-                    previousLabel={<LeftArrowLong />}
-                    renderOnZeroPageCount={null}
-                    containerClassName='flex text-xl items-center justify-center my-5'
-                    pageClassName='mr-3'
-                    breakClassName='mr-3'
-                    activeLinkClassName='font-semibold bg-secondary dark:bg-secondaryDark px-2 py-1 rounded-lg'
-                    disabledLinkClassName='hidden'
-                    previousClassName='mr-3'
-                />
+                {countPages > 1 && (
+                    <ReactPaginate
+                        breakLabel={`... `}
+                        nextLabel={<RightArrowLong />}
+                        onPageChange={(e) => {
+                            setPage(e.selected + 1);
+                        }}
+                        forcePage={page - 1}
+                        pageRangeDisplayed={2}
+                        marginPagesDisplayed={3}
+                        pageCount={countPages}
+                        previousLabel={<LeftArrowLong />}
+                        renderOnZeroPageCount={null}
+                        containerClassName='flex text-xl items-center justify-center my-5'
+                        pageClassName='mr-3'
+                        breakClassName='mr-3'
+                        activeLinkClassName='font-semibold bg-secondary dark:bg-secondaryDark px-2 py-1 rounded-lg'
+                        disabledLinkClassName='hidden'
+                        previousClassName='mr-3'
+                    />
+                )}
             </Container>
         </section>
     );
