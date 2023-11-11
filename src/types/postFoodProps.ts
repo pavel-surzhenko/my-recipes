@@ -6,5 +6,5 @@ export type postFoodProps = {
     instruction: string[];
     time: string;
     ingredients: IngredientsProps[];
-    images?: string[];
+    images: string[];
 };

@@ -2,7 +2,7 @@ import { IngredientsProps } from '.';
 
 export type foodCardProps = {
     _id: string;
-    images?: string[];
+    images: string[];
     name: string;
     category: foodCategory;
     instruction: string[];

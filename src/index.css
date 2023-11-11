@@ -31,7 +31,7 @@ select {
     @apply p-2 rounded-md bg-secondary dark:bg-secondaryDark  focus:ring-primary dark:focus:ring-primaryDark border-2 border-primary/50 dark:border-primaryDark/50 focus:border-primary dark:focus:border-primaryDark  outline-none;
 }
 .btn {
-    @apply px-3 py-2 bg-primary dark:bg-[#CBAB61] rounded-md font-medium text-white hover:ring-2 ring-offset-primary dark:ring-offset-[#CBAB61] ring-primary dark:ring-[#CBAB61];
+    @apply px-3 py-2 bg-primary dark:bg-[#CBAB61] rounded-md font-medium text-white hover:ring-2 ring-offset-primary dark:ring-offset-[#CBAB61] ring-primary dark:ring-[#CBAB61] disabled:opacity-50 disabled:cursor-not-allowed;
 }
 .btn-del {
     @apply px-3 py-2 bg-red rounded-md font-medium text-white hover:ring-2 ring-offset-red ring-red;
@@ -59,4 +59,7 @@ label:not([for='image']) {
 }
 .white-shadow {
     @apply after:content-[''] after:w-10 after:h-full after:absolute after:top-0 after:-right-2 after:bg-gradient-to-r from-background/10 to-background dark:from-backgroundDark/10 dark:to-backgroundDark;
+}
+.error {
+    @apply text-sm font-light text-red;
 }

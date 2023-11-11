@@ -7,8 +7,10 @@ import { api } from '../api';
 import { foodCardProps, formProps } from '../types';
 import Skeleton from 'react-loading-skeleton';
 import { SubmitHandler, useForm } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup/src/yup.js';
+import { formSchema } from '../lib/schema';
 
-const Form: React.FC<Partial<foodCardProps>> = ({
+const Form: React.FC<foodCardProps> = ({
     _id,
     images: existingImages,
     name: existingName,
@@ -22,15 +24,18 @@ const Form: React.FC<Partial<foodCardProps>> = ({
     const [images, setImages] = useState<string[]>(existingImages || []);
     const [isImageLoading, setIsImageLoading] = useState<boolean>(false);
 
-    const { register, handleSubmit, setValue, watch } = useForm<formProps>({
-        defaultValues: async () => ({
+    const { register, handleSubmit, setValue, watch, formState, trigger } = useForm<formProps>({
+        mode: 'all',
+        reValidateMode: 'onChange',
+        resolver: yupResolver(formSchema),
+        defaultValues: {
             category: existingCategory || 'soups',
             name: existingName || '',
             images: existingImages || [],
             time: existingTime || '',
             ingredients: existingIngredients || [],
             instruction: existingInstruction || [],
-        }),
+        },
     });
 
     const category = watch('category');
@@ -73,6 +78,7 @@ const Form: React.FC<Partial<foodCardProps>> = ({
         if (instructionSteps.length > 1) {
             setValue('instruction', instructionSteps.slice(0, -1));
         }
+        trigger('instruction');
     };
 
     const addIngredient = () => {
@@ -83,6 +89,7 @@ const Form: React.FC<Partial<foodCardProps>> = ({
         if (ingredients.length > 1) {
             setValue('ingredients', ingredients.slice(0, -1));
         }
+        trigger('ingredients');
     };
 
     const validFiles = ['image/jpg', 'image/jpeg', 'image/png'];
@@ -156,7 +163,10 @@ const Form: React.FC<Partial<foodCardProps>> = ({
                 className='input'
                 {...register('name')}
             />
-            <label>Завантажити фото</label>
+            <span className='error'>{formState.errors.name?.message}</span>
+            <label>
+                Завантажити фото<span className='text-red'>*</span>
+            </label>
             <label
                 htmlFor='image'
                 className='cursor-pointer btn-suc self-start'
@@ -169,6 +179,7 @@ const Form: React.FC<Partial<foodCardProps>> = ({
                 onChange={handleFileChange}
                 className='hidden'
             />
+            <span className='error'>{formState.errors.images?.message}</span>
             <div className='flex space-x-3'>
                 {isImageLoading && (
                     <div className='leading-none'>
@@ -208,6 +219,7 @@ const Form: React.FC<Partial<foodCardProps>> = ({
                 className='input w-1/3 md:w-1/4 xl:w-1/5'
                 {...register('time')}
             />
+            <span className='error'>{formState.errors.time?.message}</span>
             <label htmlFor='ingredients'>
                 Інгредієнти <span className='text-red'>*</span>
             </label>
@@ -237,6 +249,21 @@ const Form: React.FC<Partial<foodCardProps>> = ({
                     </select>
                 </div>
             ))}
+            <span className='error'>
+                {formState.errors.ingredients
+                    ? Array.isArray(formState.errors.ingredients) &&
+                      formState.errors.ingredients.map((item, index) => (
+                          <p
+                              key={index}
+                              className='flex flex-col'
+                          >
+                              <span>{item?.name?.message}</span>
+                              <span>{item?.quantity?.message}</span>
+                              <span>{item?.unit?.message}</span>
+                          </p>
+                      ))
+                    : null}
+            </span>
             {ingredients?.length > 1 && (
                 <button
                     type='button'
@@ -272,6 +299,14 @@ const Form: React.FC<Partial<foodCardProps>> = ({
                     />
                 </div>
             ))}
+            <span className='error'>
+                {formState.errors.instruction
+                    ? Array.isArray(formState.errors.instruction) &&
+                      formState.errors.instruction.map((item, index) => (
+                          <span key={index}>{item.message}</span>
+                      ))
+                    : null}
+            </span>
             {instructionSteps?.length > 1 && (
                 <button
                     type='button'
@@ -293,6 +328,7 @@ const Form: React.FC<Partial<foodCardProps>> = ({
             <button
                 type='submit'
                 className='btn'
+                disabled={!formState.isValid}
             >
                 {_id ? 'Оновити' : 'Зберегти'}
             </button>
