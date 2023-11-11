@@ -1,11 +1,11 @@
 import { Link } from 'react-router-dom';
 import { ImageIcon, TimeIcon } from '../assets';
-import { FoodCardProps } from '../types';
+import { foodCardProps } from '../types';
 import CategoryLabel from './CategoryLabel';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import 'react-lazy-load-image-component/src/effects/blur.css';
 
-const FoodCard: React.FC<FoodCardProps> = ({ name, category, images, _id, time }) => {
+const FoodCard: React.FC<foodCardProps> = ({ name, category, images, _id, time }) => {
     return (
         <div className='bg-secondary dark:bg-secondaryDark rounded-md space-y-3 flex flex-col min-w-[250px] shadow-card hover:shadow-cardHover h-full'>
             <Link to={`/${category}/${_id}`}>

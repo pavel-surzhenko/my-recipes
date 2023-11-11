@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import Container from '../components/Container';
-import { FoodCardProps, foodCategory } from '../types';
+import { foodCardProps, foodCategory } from '../types';
 import NewRecipeBtn from '../components/NewRecipeBtn';
 import { api } from '../api';
 import { toast } from 'react-toastify';
@@ -14,8 +14,8 @@ import { LeftArrowLong } from '../assets/LeftArrowLong';
 import { RightArrowLong } from '../assets/RightArrowLong';
 
 const Home = () => {
-    const [randomFood, setRandomFood] = useState<FoodCardProps>();
-    const [allFood, setAllFood] = useState<FoodCardProps[]>();
+    const [randomFood, setRandomFood] = useState<foodCardProps>();
+    const [allFood, setAllFood] = useState<foodCardProps[]>();
     const [randomLoading, setRandomLoading] = useState(false);
     const [foodLoading, setFoodLoading] = useState(false);
     const [sorting, setSorting] = useState('date_desc');

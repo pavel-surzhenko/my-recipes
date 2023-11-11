@@ -4,10 +4,10 @@ import { toast } from 'react-toastify';
 import { toastOptions } from '../lib/toastOptions';
 import { useNavigate } from 'react-router-dom';
 import { api } from '../api';
-import { FoodCardProps, IngredientsProps, foodCategory } from '../types';
+import { foodCardProps, IngredientsProps, foodCategory } from '../types';
 import Skeleton from 'react-loading-skeleton';
 
-const Form: React.FC<Partial<FoodCardProps>> = ({
+const Form: React.FC<Partial<foodCardProps>> = ({
     _id,
     images: existingImages,
     name: existingName,

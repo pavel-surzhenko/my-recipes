@@ -1,9 +1,9 @@
 import React, { Suspense } from 'react';
-import { FoodCardProps } from '../types';
+import { foodCardProps } from '../types';
 
 const FoodCard = React.lazy(() => import('../components/FoodCard'));
 
-const FoodGrid: React.FC<{ data: FoodCardProps[] }> = ({ data }) => {
+const FoodGrid: React.FC<{ data: foodCardProps[] }> = ({ data }) => {
     return (
         <div className='grid grid-cols-1 justify-center sm:grid-cols-2 smd:grid-cols-3 xl:grid-cols-4 gap-7 my-10 mx-auto'>
             <Suspense>
