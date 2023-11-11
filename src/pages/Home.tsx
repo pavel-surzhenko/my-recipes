@@ -93,7 +93,7 @@ const Home = () => {
                         </button>
                     </form>
                     <div className='flex justify-center '>
-                        <div className='w-[300px]'>
+                        <div className='w-[300px] h-[300px] md:h-[333px]'>
                             {randomLoading ? (
                                 <SkeletonCard />
                             ) : (

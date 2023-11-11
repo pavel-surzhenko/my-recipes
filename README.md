@@ -31,4 +31,3 @@ slot machine animation ?
 add valiadtion to form
 add search
 add hover title img
-add slider for img
