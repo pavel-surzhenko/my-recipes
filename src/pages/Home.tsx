@@ -93,7 +93,7 @@ const Home = () => {
                         </button>
                     </form>
                     <div className='flex justify-center '>
-                        <div className='w-[300px] h-[300px] md:h-[333px]'>
+                        <div className='w-[300px] h-[308px] md:h-[350px]'>
                             {randomLoading ? (
                                 <SkeletonCard />
                             ) : (
@@ -101,7 +101,7 @@ const Home = () => {
                                     {randomFood ? (
                                         <FoodCard {...randomFood} />
                                     ) : (
-                                        <div className='bg-secondary dark:bg-secondaryDark rounded-md h-[308px] lg:h-[333px] py-10 px-5 space-y-5 opacity-50'>
+                                        <div className='bg-secondary dark:bg-secondaryDark rounded-md h-[308px] lg:h-[350px] py-10 px-5 space-y-5 opacity-50'>
                                             <div className='text-center text-9xl'>?</div>
                                             <div className='text-center'>випадковий рецепт</div>
                                         </div>

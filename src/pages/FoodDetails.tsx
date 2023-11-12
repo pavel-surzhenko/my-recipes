@@ -9,6 +9,7 @@ import SkeletonDetailsPage from '../components/Skeleton/SkeletonDetailsPage';
 import { ImageIcon, TimeIcon, PencilIcon } from '../assets';
 import ConfirmModal from '../components/ConfirmModal';
 import { foodCardProps, foodCategory } from '../types/foodCardProps';
+import { LazyLoadImage } from 'react-lazy-load-image-component';
 
 const FoodDetails = () => {
     const { id, foodType } = useParams<{ id: string; foodType: foodCategory }>();
@@ -56,7 +57,7 @@ const FoodDetails = () => {
                                     <div className='hidden smd:block'>
                                         <div className='w-[425px] smd:max-lg:w-[400px] h-[300px]  rounded-md overflow-hidden '>
                                             {activeImage ? (
-                                                <img
+                                                <LazyLoadImage
                                                     src={activeImage}
                                                     alt={data.name}
                                                     className='w-full h-full object-cover'
@@ -68,7 +69,7 @@ const FoodDetails = () => {
                                         {data.images && data.images.length > 1 && (
                                             <div className='flex pt-5 space-x-3'>
                                                 {data.images?.map((img) => (
-                                                    <img
+                                                    <LazyLoadImage
                                                         key={img}
                                                         src={img}
                                                         alt={data.name}
@@ -198,25 +199,25 @@ const FoodDetails = () => {
 
                         {similarFood && similarFood.length && (
                             <div className='mt-10'>
-                                <h4 className='text-lg font-semibold mb-5'>Дивіться також</h4>
+                                <h4 className='text-lg font-semibold'>Дивіться також</h4>
                                 <div
                                     className={`relative ${
                                         similarFood.length > 4 ? 'white-shadow' : ''
                                     }`}
                                 >
                                     <div
-                                        className={`overflow-x-scroll md:${
+                                        className={`${
                                             similarFood.length > 4
                                                 ? 'overflow-x-scroll'
                                                 : 'overflow-x-auto'
-                                        } flex space-x-5`}
+                                        } flex space-x-5 pt-5`}
                                     >
                                         {similarFood?.map(
                                             (food) =>
                                                 food._id !== data?._id && (
                                                     <div
                                                         key={food._id}
-                                                        className='w-[250px] flex-1 mb-4'
+                                                        className=' mb-4'
                                                     >
                                                         <FoodCard {...food} />
                                                     </div>
