@@ -9,6 +9,7 @@ import Skeleton from 'react-loading-skeleton';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup/src/yup.js';
 import { formSchema } from '../lib/schema';
+import SkeletonButton from './Skeleton/SkeletonButton';
 
 const Form: React.FC<Partial<foodCardProps>> = ({
     _id,
@@ -23,6 +24,7 @@ const Form: React.FC<Partial<foodCardProps>> = ({
 
     const [images, setImages] = useState<string[]>(existingImages || []);
     const [isImageLoading, setIsImageLoading] = useState<boolean>(false);
+    const [formLoading, setFormLoading] = useState<boolean>(false);
 
     const { register, handleSubmit, setValue, watch, formState, trigger } = useForm<formProps>({
         mode: 'all',
@@ -43,6 +45,7 @@ const Form: React.FC<Partial<foodCardProps>> = ({
     const instructionSteps = watch('instruction');
 
     const onSubmit: SubmitHandler<formProps> = (data) => {
+        setFormLoading(true);
         if (_id) {
             api.update
                 .food(_id, data)
@@ -54,7 +57,8 @@ const Form: React.FC<Partial<foodCardProps>> = ({
                 })
                 .catch((err) => {
                     toast.error(`Упс, сталась помилка: ${err.message}`);
-                });
+                })
+                .finally(() => setFormLoading(false));
         } else {
             api.post
                 .food(data)
@@ -66,7 +70,8 @@ const Form: React.FC<Partial<foodCardProps>> = ({
                 })
                 .catch((err) => {
                     toast.error(`Упс, сталась помилка: ${err.message}`);
-                });
+                })
+                .finally(() => setFormLoading(false));
         }
     };
 
@@ -164,9 +169,7 @@ const Form: React.FC<Partial<foodCardProps>> = ({
                 {...register('name')}
             />
             <span className='error'>{formState.errors.name?.message}</span>
-            <label>
-                Завантажити фото<span className='text-red'>*</span>
-            </label>
+            <label>Завантажити фото</label>
             <label
                 htmlFor='image'
                 className='cursor-pointer btn-suc self-start'
@@ -330,13 +333,18 @@ const Form: React.FC<Partial<foodCardProps>> = ({
                 <AddIcon />
                 <span>Додати крок</span>
             </button>
-            <button
-                type='submit'
-                className='btn'
-                disabled={!formState.isValid}
-            >
-                {_id ? 'Оновити' : 'Зберегти'}
-            </button>
+            {formLoading ? (
+                <SkeletonButton />
+            ) : (
+                <button
+                    type='submit'
+                    className='btn'
+                    disabled={!formState.isValid}
+                >
+                    {_id ? 'Оновити' : 'Зберегти'}
+                </button>
+            )}
+            {!formState.isValid && <span className='error'>*заповніть всі поля</span>}
         </form>
     );
 };
