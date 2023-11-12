@@ -28,6 +28,5 @@ If you are developing a production application, we recommend updating the config
 
 to do
 slot machine animation ?
-add valiadtion to form
 add search
 add hover title img

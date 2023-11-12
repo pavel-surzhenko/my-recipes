@@ -6,7 +6,7 @@ export const SunIcon = () => {
             viewBox='0 0 24 24'
             strokeWidth={1.5}
             stroke='currentColor'
-            className='w-6 h-6 text-secondary fill-secondary'
+            className='w-6 h-6 text-secondary fill-secondary dark:text-primaryDark dark:fill-primaryDark'
         >
             <path
                 strokeLinecap='round'

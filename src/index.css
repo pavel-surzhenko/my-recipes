@@ -22,22 +22,22 @@ select {
     @apply flex flex-col flex-1;
 }
 .active {
-    @apply underline underline-offset-8;
+    @apply underline underline-offset-8 text-white;
 }
 .input {
-    @apply px-3 py-2 rounded-md bg-secondary dark:bg-secondaryDark  focus:ring-primary dark:focus:ring-primaryDark border-2 border-primary/50 dark:border-primaryDark/50 focus:border-primary dark:focus:border-primaryDark  outline-none;
+    @apply placeholder:text-white/50 px-3 py-2 rounded-md bg-secondary dark:bg-secondaryDark  focus:ring-primary dark:focus:ring-primaryDark border-2 border-primary/50 dark:border-primaryDark/50 focus:border-primary dark:focus:border-primaryDark  outline-none;
 }
 .select {
     @apply p-2 rounded-md bg-secondary dark:bg-secondaryDark  focus:ring-primary dark:focus:ring-primaryDark border-2 border-primary/50 dark:border-primaryDark/50 focus:border-primary dark:focus:border-primaryDark  outline-none;
 }
 .btn {
-    @apply px-3 py-2 bg-primary dark:bg-[#CBAB61] rounded-md font-medium text-white hover:ring-2 ring-offset-primary dark:ring-offset-[#CBAB61] ring-primary dark:ring-[#CBAB61] disabled:opacity-50 disabled:cursor-not-allowed;
+    @apply px-3 py-2 text-black bg-primary dark:bg-blue rounded-md font-medium dark:text-white hover:ring-2 ring-offset-primary dark:ring-offset-blue ring-primary dark:ring-blue disabled:opacity-50 disabled:cursor-not-allowed;
 }
 .btn-del {
-    @apply px-3 py-2 bg-red rounded-md font-medium text-white hover:ring-2 ring-offset-red ring-red;
+    @apply px-3 py-2 bg-redLight dark:bg-red rounded-md font-medium text-white hover:ring-2 ring-offset-redLight ring-redLight dark:ring-offset-red dark:ring-red;
 }
 .btn-suc {
-    @apply px-3 py-2 bg-green rounded-md font-medium text-white hover:ring-2 ring-offset-green ring-green;
+    @apply px-3 py-2 bg-greenLight dark:bg-green rounded-md font-medium text-white hover:ring-2 ring-offset-greenLight ring-greenLight dark:ring-offset-green dark:ring-green;
 }
 label:not([for='image']) {
     @apply text-lg font-medium;

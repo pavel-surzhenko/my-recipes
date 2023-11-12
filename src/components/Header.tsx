@@ -19,15 +19,40 @@ const Header = () => {
     }, [isMenuOpen]);
 
     return (
-        <header className='bg-primary py-5 text-lg text-white dark:bg-primaryDark'>
+        <header className='bg-primary py-5 text-lg text-white/80 dark:text-white/50 dark:bg-secondaryDark'>
             <Container>
                 <div className='flex items-center justify-between'>
                     <nav className='hidden md:flex md:text-base lg:text-xl space-x-3 font-semibold'>
-                        <NavLink to={'/'}>Головна</NavLink>
-                        <NavLink to={'/soups'}>Супи</NavLink>
-                        <NavLink to={'/main'}>Другі страви</NavLink>
-                        <NavLink to={'/salads'}>Салати</NavLink>
-                        <NavLink to={'/desserts'}>Десерти</NavLink>
+                        <NavLink
+                            to={'/'}
+                            className='hover:dark:text-white hover:text-white'
+                        >
+                            Головна
+                        </NavLink>
+                        <NavLink
+                            to={'/soups'}
+                            className='hover:dark:text-white hover:text-white'
+                        >
+                            Супи
+                        </NavLink>
+                        <NavLink
+                            to={'/main'}
+                            className='hover:dark:text-white hover:text-white'
+                        >
+                            Другі страви
+                        </NavLink>
+                        <NavLink
+                            to={'/salads'}
+                            className='hover:dark:text-white hover:text-white'
+                        >
+                            Салати
+                        </NavLink>
+                        <NavLink
+                            to={'/desserts'}
+                            className='hover:dark:text-white hover:text-white'
+                        >
+                            Десерти
+                        </NavLink>
                     </nav>
                     <div className='order-2 flex space-x-5'>
                         <form className='relative'>
@@ -42,7 +67,7 @@ const Header = () => {
                         </form>
                         <div
                             onClick={handleThemeChange}
-                            className='flex items-center cursor-pointer'
+                            className='flex items-center cursor-pointer text-white'
                         >
                             {isThemeDark ? <SunIcon /> : <MoonIcon />}
                         </div>
@@ -54,7 +79,7 @@ const Header = () => {
                     </div>
                 </div>
                 {isMenuOpen && (
-                    <div className='bg-primary dark:bg-primaryDark h-screen w-screen'>
+                    <div className='bg-primary dark:bg-secondaryDark h-screen w-screen text-white dark:text-white/50'>
                         <nav className='flex flex-col space-y-5 font-semibold ml-5 text-2xl mt-10'>
                             <NavLink
                                 to={'/'}
