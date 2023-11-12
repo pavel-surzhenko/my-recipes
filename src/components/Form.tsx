@@ -10,7 +10,7 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup/src/yup.js';
 import { formSchema } from '../lib/schema';
 
-const Form: React.FC<foodCardProps> = ({
+const Form: React.FC<Partial<foodCardProps>> = ({
     _id,
     images: existingImages,
     name: existingName,
@@ -299,14 +299,19 @@ const Form: React.FC<foodCardProps> = ({
                     />
                 </div>
             ))}
-            <span className='error'>
+            <p className='flex flex-col'>
                 {formState.errors.instruction
                     ? Array.isArray(formState.errors.instruction) &&
                       formState.errors.instruction.map((item, index) => (
-                          <span key={index}>{item.message}</span>
+                          <span
+                              className='error'
+                              key={index}
+                          >
+                              {item.message}
+                          </span>
                       ))
                     : null}
-            </span>
+            </p>
             {instructionSteps?.length > 1 && (
                 <button
                     type='button'
