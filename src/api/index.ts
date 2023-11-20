@@ -1,4 +1,4 @@
-import { BASE_URL } from './options';
+import { BASE_URL, LOCAL_URL } from './options';
 import { foodCardProps, foodCategory, postFoodProps, foodResponse } from '../types';
 import { fetchData } from '../hooks/fetchData';
 import { postData } from '../hooks/postData';
@@ -33,6 +33,10 @@ export const api = {
 
         async random(category: foodCategory): Promise<foodCardProps> {
             return fetchData<foodCardProps>(`${BASE_URL}random?category=${category}`);
+        },
+
+        async search(name: string): Promise<foodResponse> {
+            return fetchData<foodResponse>(`${BASE_URL}search?name=${name}`);
         },
     },
     post: {

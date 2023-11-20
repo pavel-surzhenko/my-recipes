@@ -14,6 +14,7 @@ export default {
             boxShadow: {
                 card: 'rgba(0, 0, 0, 0.35) 0px 5px 15px;',
                 cardHover: 'rgba(0, 0, 0, 0.55) 0px 10px 15px;',
+                header: 'inset 0px -23px 15px -3px rgba(0,0,0,0.1);',
             },
             backgroundImage: {
                 'new_recipes-bg': 'url(/background.svg)',
